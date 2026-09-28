@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>紅仙水 HAND DRIP COFFEE - 單品手沖咖啡價目表 (直火極簡品牌旗艦版)</title>
+  
+  <!-- 載入各風格樣式表 -->
+  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="./theme-canva.css">
+  <link rel="stylesheet" href="./theme-hybrid.css">
+  <link rel="stylesheet" href="./theme-pages.css">
+</head>
+<body class="theme-wine mode-a4">
+
+  <!-- 頂部互動控制列（螢幕顯示，列印時自動隱藏） -->
+  <header class="controls-toolbar" aria-label="版面控制列">
+    
+    <!-- 1. 視覺風格切換 (四大手沖風格，依數字 1 至 4 順序排列) -->
+    <div class="toolbar-group" id="group-theme-select">
+      <span class="toolbar-label" id="label-theme">手沖風格：</span>
+      <div class="segmented-control" role="group" aria-labelledby="label-theme">
+        <button type="button" class="seg-btn active" id="btn-theme-wine" aria-pressed="true" onclick="setTheme('wine')">🍷 風格一：經典酒紅雅致</button>
+        <button type="button" class="seg-btn" id="btn-theme-canva" aria-pressed="false" onclick="setTheme('canva')">📜 風格二：Canva 原版二欄</button>
+        <button type="button" class="seg-btn" id="btn-theme-hybrid" aria-pressed="false" onclick="setTheme('hybrid')">✨ 風格三：直火極簡三欄 (品牌旗艦)</button>
+        <button type="button" class="seg-btn" id="btn-theme-wine-brand" aria-pressed="false" onclick="setTheme('wine-brand')">👑 風格四：酒紅經典品牌版</button>
+      </div>
+    </div>
+
+    <!-- 2. 菜單資料來源切換 -->
+    <div class="toolbar-group" id="group-dataset-select">
+      <label for="select-dataset" class="toolbar-label">菜單版本：</label>
+      <select id="select-dataset" class="select-input" onchange="changeDataset(this.value)">
+        <option value="curated" selected>⭐ 最新核定精選 9 款 (含世界冠軍豆)</option>
+        <option value="canva">📄 Canva PDF 原版 12 款 (完整復刻)</option>
+      </select>
+    </div>
+
+    <!-- 3. 檢視模式切換 -->
+    <div class="toolbar-group">
+      <span class="toolbar-label" id="label-mode">檢視模式：</span>
+      <div class="segmented-control" role="group" aria-labelledby="label-mode">
+        <button type="button" class="seg-btn active" id="btn-mode-a4" aria-pressed="true" onclick="setViewMode('a4')">📄 A4 大字版</button>
+        <button type="button" class="seg-btn" id="btn-mode-cont" aria-pressed="false" onclick="setViewMode('continuous')">📱 連續捲動 (手機友好)</button>
+      </div>
+    </div>
+
+    <!-- 4. 每頁品項數控制 -->
+    <div class="toolbar-group" id="group-items-per-page">
+      <label for="select-items-per-page" class="toolbar-label">每頁品項數：</label>
+      <select id="select-items-per-page" class="select-input" onchange="changeItemsPerPage(this.value)">
+        <option value="4">4 款 / 頁</option>
+        <option value="5" selected>5 款 / 頁 (標準推薦)</option>
+        <option value="6">6 款 / 頁 (Canva 原版規格)</option>
+      </select>
+    </div>
+
+    <!-- 5. 列印按鈕 -->
+    <div class="toolbar-group">
+      <button type="button" class="btn-print" onclick="window.print()" aria-label="列印或另存為 PDF 文件">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <polyline points="6 9 6 2 18 2 18 9"></polyline>
+          <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+          <rect x="6" y="14" width="12" height="8"></rect>
+        </svg>
+        列印 / 另存為 PDF
+      </button>
+    </div>
+  </header>
+
+  <!-- A4 分頁舞台容器（由 data.js 動態渲染生成） -->
+  <main class="pages-stage" id="pages-stage" role="main"></main>
+
+  <!-- 載入菜單資料庫（無 CORS 限制，雙擊直接開啟） -->
+  <script src="./data.js"></script>
+
+  <!-- 三風格雙資料集渲染引擎 -->
+  <script>
+    let currentTheme = 'wine'; // 'wine' | 'canva' | 'hybrid' | 'wine-brand'
+    let currentDataset = 'curated'; // 'curated' | 'canva'
+    let currentMode = 'a4'; // 'a4' | 'continuous'
+    let itemsPerPage = 5;
+
+    function setTheme(theme) {
+      currentTheme = theme;
+      document.body.className = `theme-${theme} ${currentMode === 'a4' ? 'mode-a4' : 'mode-continuous'}`;
+      
+      const themes = ['wine', 'canva', 'hybrid', 'wine-brand'];
+      themes.forEach(t => {
+        const btn = document.getElementById(`btn-theme-${t}`);
+        const isActive = (t === theme);
+        btn.classList.toggle('active', isActive);
+        btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+      });
+      
+      // 自動切換合適的預設每頁數量與資料集建議
+      if (theme === 'canva') {
+        itemsPerPage = 6;
+        document.getElementById('select-items-per-page').value = '6';
+      } else {
+        itemsPerPage = 5;
+        document.getElementById('select-items-per-page').value = '5';
+      }
+      
+      renderPages();
+    }
+
+    function changeDataset(val) {
+      currentDataset = val;
+      renderPages();
+    }
+
+    function setViewMode(mode) {
+      currentMode = mode;
+      document.body.className = `theme-${currentTheme} ${mode === 'a4' ? 'mode-a4' : 'mode-continuous'}`;
+      
+      const btnA4 = document.getElementById('btn-mode-a4');
+      const btnCont = document.getElementById('btn-mode-cont');
+      const isA4 = (mode === 'a4');
+      
+      btnA4.classList.toggle('active', isA4);
+      btnA4.setAttribute('aria-pressed', isA4 ? 'true' : 'false');
+      btnCont.classList.toggle('active', !isA4);
+      btnCont.setAttribute('aria-pressed', !isA4 ? 'true' : 'false');
+      
+      document.getElementById('group-items-per-page').style.display = isA4 ? 'flex' : 'none';
+      renderPages();
+    }
+
+    function changeItemsPerPage(val) {
+      itemsPerPage = parseInt(val, 10) || 5;
+      renderPages();
+    }
+
+    function getActiveData() {
+      if (currentDataset === 'canva') {
+        return window.CANVA_ORIGINAL_MENU_DATA || window.COFFEE_MENU_DATA;
+      }
+      return window.COFFEE_MENU_DATA;
+    }
+
+    function getAssetUrl(key, defaultPath) {
+      if (window.MENU_ASSETS && window.MENU_ASSETS[key]) {
+        return window.MENU_ASSETS[key];
+      }
+      return defaultPath;
+    }
+
+    function formatItemNumber(id) {
+      if (id === null || id === undefined) return '';
+      const str = String(id).trim();
+      const num = parseInt(str, 10);
+      if (!isNaN(num)) {
+        return String(num);
+      }
+      return str;
+    }
+
+    function renderPages() {
+      const stage = document.getElementById('pages-stage');
+      stage.innerHTML = '';
+
+      const data = getActiveData();
+      if (!data || !data.items) return;
+
+      const items = data.items;
+      const brand = data.brand || {
+        enTitle: "HAND DRIP COFFEE",
+        name: "紅 仙 水",
+        menuTitle: "嚴選單品手沖咖啡價目表",
+        footerSlogan: "紅仙水 直火烘焙咖啡 ✦ 匠心手沖 ✦ 每週新鮮烘焙"
+      };
+
+      const isA4 = (currentMode === 'a4');
+      const totalPages = isA4 ? Math.ceil(items.length / itemsPerPage) : 1;
+
+      // 單品手沖咖啡頁面 (P.1 ~ P.2 或 連續捲動)
+      if (!isA4) {
+        let sheet;
+        if (currentTheme === 'canva') {
+          sheet = createCanvaSheetElement(items, 1, totalPages, false, brand);
+        } else if (currentTheme === 'hybrid') {
+          sheet = createHybridSheetElement(items, 1, totalPages, false, brand);
+        } else if (currentTheme === 'wine-brand') {
+          sheet = createWineBrandSheetElement(items, 1, totalPages, false, brand);
+        } else {
+          sheet = createWineSheetElement(items, 1, totalPages, false, brand);
+        }
+        stage.appendChild(sheet);
+      } else {
+        for (let i = 0; i < totalPages; i++) {
+          const pageItems = items.slice(i * itemsPerPage, (i + 1) * itemsPerPage);
+          const pageNum = i + 1;
+          let sheet;
+          if (currentTheme === 'canva') {
+            sheet = createCanvaSheetElement(pageItems, pageNum, totalPages, true, brand);
+          } else if (currentTheme === 'hybrid') {
+            sheet = createHybridSheetElement(pageItems, pageNum, totalPages, true, brand);
+          } else if (currentTheme === 'wine-brand') {
+            sheet = createWineBrandSheetElement(pageItems, pageNum, totalPages, true, brand);
+          } else {
+            sheet = createWineSheetElement(pageItems, pageNum, totalPages, true, brand);
+          }
+          stage.appendChild(sheet);
+        }
+      }
+    }
+
+    /* ==============================================================================
+       ✨ 風格三：直火極簡三欄版型渲染器 (品牌旗艦版 - 最受歡迎的融合設計)
+       ============================================================================== */
+    function createHybridSheetElement(items, pageNum, totalPages, isA4, brand) {
+      const sheet = document.createElement('article');
+      sheet.className = 'a4-sheet';
+
+      const pageIndicator = isA4 ? `<div class="sheet-page-indicator">第 ${pageNum} 頁 / 共 ${totalPages} 頁</div>` : '';
+
+      let itemsHtml = '';
+      items.forEach(item => {
+        let tagsHtml = '';
+        if (item.process) tagsHtml += `<span class="hybrid-tag hybrid-tag-process">${escapeHtml(item.process)}</span>`;
+        if (item.roast) tagsHtml += `<span class="hybrid-tag hybrid-tag-roast">${escapeHtml(item.roast)}</span>`;
+        if (item.canLatte) {
+          tagsHtml += `<span class="hybrid-tag hybrid-tag-latte"><img src="./assets/badge_heart.png" class="hybrid-tag-latte-heart" alt="愛心"> 可拿鐵</span>`;
+        }
+
+        itemsHtml += `
+          <div class="hybrid-item-row">
+            <div class="hybrid-col-info">
+              <div class="hybrid-title-line">
+                <span class="hybrid-item-id">${escapeHtml(formatItemNumber(item.id))}.</span>
+                <span class="hybrid-item-name">${escapeHtml(item.name)}</span>
+              </div>
+              <div class="hybrid-tags-group">${tagsHtml}</div>
+              <div class="hybrid-flavor-notes">${escapeHtml(item.notes)}</div>
+            </div>
+
+            <div class="hybrid-col-price">
+              <span class="hybrid-cup-price">$${item.cupPrice}</span>
+            </div>
+
+            <div class="hybrid-col-package">
+              <div class="hybrid-pkg-row">
+                <span class="hybrid-pkg-label">熟豆 200g</span>
+                <span class="hybrid-pkg-val">$${item.beansPrice200g}</span>
+              </div>
+              <div class="hybrid-pkg-row">
+                <span class="hybrid-pkg-label">濾掛 10包</span>
+                <span class="hybrid-pkg-val">$${item.dripPrice10pk}</span>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+
+      sheet.innerHTML = `
+        ${pageIndicator}
+        <header class="canva-header">
+          <div class="canva-logo-cluster">
+            <span class="sub-text">直火</span>
+            <img src="./assets/logo_flower.png" class="flower-logo-img" alt="紅仙水花旋標誌">
+            <span class="sub-text">烘豆</span>
+          </div>
+          <div class="canva-brand-title-wrap">
+            <img src="./assets/logo_text.svg" class="canva-brand-title-img" alt="紅仙水" onerror="this.onerror=null; this.src='./assets/logo_text.png';">
+          </div>
+
+          <div class="canva-pill-bar">
+            <div class="canva-pill-bar-left">
+              <img src="./assets/dripper_icon.png" class="canva-dripper-img" alt="手繪手沖濾杯插畫">
+              <span class="canva-pill-badge">單品手沖</span>
+            </div>
+            <div class="hybrid-header-notices">
+              <div class="hybrid-notice-line"><svg class="hybrid-notice-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/><path d="M6 12h.01M18 12h.01"/></svg> <span>僅限現金支付</span></div>
+              <div class="hybrid-notice-line"><img src="./assets/badge_heart.png" class="hybrid-notice-heart-icon" alt="愛心" aria-hidden="true"> <span>標示 [可拿鐵] 品項 +20元 可製作成拿鐵</span></div>
+              <div class="hybrid-notice-line"><svg class="hybrid-notice-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg> <span>熟豆包裝：200g / 濾掛包：10包裝</span></div>
+            </div>
+          </div>
+        </header>
+
+        <div class="hybrid-table-header">
+          <div>品名與風味敘述 (Single Origin)</div>
+          <div class="hybrid-th-col-price">單杯手沖</div>
+          <div class="hybrid-th-col-pkg">熟豆 / 濾掛外帶價格</div>
+        </div>
+
+        <section class="hybrid-coffee-list">
+          ${itemsHtml}
+        </section>
+
+        <footer class="hybrid-footer">
+          <div>✦ ${escapeHtml(brand.footerSlogan || '紅仙水 直火烘焙咖啡 ✦ 匠心手沖 ✦ 每週新鮮烘焙')}</div>
+        </footer>
+      `;
+
+      return sheet;
+    }
+
+    /* ==============================================================================
+       📜 風格二：Canva 極簡直火二欄版型渲染器
+       ============================================================================== */
+    function createCanvaSheetElement(items, pageNum, totalPages, isA4, brand) {
+      const sheet = document.createElement('article');
+      sheet.className = 'a4-sheet';
+
+      const pageIndicator = isA4 ? `<div class="sheet-page-indicator">第 ${pageNum} 頁 / 共 ${totalPages} 頁</div>` : '';
+
+      let itemsHtml = '';
+      items.forEach(item => {
+        const displayName = item.dotName || item.name;
+        const processRoast = item.process && item.roast ? `${escapeHtml(item.process)}（${escapeHtml(item.roast)}）` : escapeHtml(item.process || item.roast || '');
+        const latteIconHtml = item.canLatte ? `<img src="./assets/badge_heart.png" class="canva-heart-icon" alt="可做拿鐵" title="可做成拿鐵">` : '';
+        const pkgText = item.pkgSubtext || `(熟豆200g:${item.beansPrice200g} 元/ 濾掛一盒10包${item.dripPrice10pk}元)`;
+
+        itemsHtml += `
+          <div class="canva-item-row">
+            <div class="canva-item-left">
+              <div class="canva-item-header">
+                <span class="canva-item-num">${escapeHtml(formatItemNumber(item.id))}</span>
+                <span class="canva-item-name">${escapeHtml(displayName)}</span>
+              </div>
+              <div class="canva-item-process-line">
+                <span class="canva-item-process-text">${processRoast}</span>
+                ${latteIconHtml}
+              </div>
+              <div class="canva-item-flavors">${escapeHtml(item.notes)}</div>
+              <div class="canva-item-packaging">${escapeHtml(pkgText)}</div>
+            </div>
+            <div class="canva-item-right">
+              <div class="canva-item-price">${item.cupPrice}</div>
+            </div>
+          </div>
+        `;
+      });
+
+      sheet.innerHTML = `
+        ${pageIndicator}
+        <header class="canva-header">
+          <div class="canva-logo-cluster">
+            <span class="sub-text">直火</span>
+            <img src="./assets/logo_flower.png" class="flower-logo-img" alt="紅仙水花旋標誌">
+            <span class="sub-text">烘豆</span>
+          </div>
+          <div class="canva-brand-title-wrap">
+            <img src="./assets/logo_text.svg" class="canva-brand-title-img" alt="紅仙水" onerror="this.onerror=null; this.src='./assets/logo_text.png';">
+          </div>
+
+          <div class="canva-pill-bar">
+            <div class="canva-pill-bar-left">
+              <img src="./assets/dripper_icon.png" class="canva-dripper-img" alt="手繪手沖濾杯插畫">
+              <span class="canva-pill-badge">單品手沖</span>
+            </div>
+            <div class="canva-pill-bar-right">
+              <span class="canva-pill-badge">僅限現金支付</span>
+            </div>
+          </div>
+        </header>
+
+        <section class="canva-coffee-list">
+          ${itemsHtml}
+        </section>
+
+        <footer class="canva-footer">
+          <span class="canva-footer-star">＊</span>
+          <img src="./assets/badge_heart.png" class="canva-footer-heart" alt="愛心標示">
+          <span>標示品項+20元可做成拿鐵</span>
+        </footer>
+      `;
+
+      return sheet;
+    }
+
+    /* ==============================================================================
+       🍷 風格一：經典酒紅雅致版型渲染器 (基準對照組)
+       ============================================================================== */
+    function createWineSheetElement(items, pageNum, totalPages, isA4, brand) {
+      const sheet = document.createElement('article');
+      sheet.className = 'a4-sheet';
+
+      const pageSubtitle = isA4 ? `${escapeHtml(brand.menuTitle)} (${pageNum}/${totalPages})` : escapeHtml(brand.menuTitle);
+      const pageIndicator = isA4 ? `<div class="sheet-page-indicator">第 ${pageNum} 頁 / 共 ${totalPages} 頁</div>` : '';
+
+      let itemsHtml = '';
+      items.forEach(item => {
+        let tagsHtml = '';
+        if (item.process) tagsHtml += `<span class="tag-pill tag-process">${escapeHtml(item.process)}</span>`;
+        if (item.roast) tagsHtml += `<span class="tag-pill tag-roast">${escapeHtml(item.roast)}</span>`;
+        if (item.canLatte) {
+          tagsHtml += `<span class="tag-pill tag-latte"><svg class="tag-latte-mug-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="2" x2="6" y2="4"/><line x1="10" y1="2" x2="10" y2="4"/><line x1="14" y1="2" x2="14" y2="4"/></svg> 可拿鐵</span>`;
+        }
+
+        itemsHtml += `
+          <div class="coffee-item-row">
+            <div class="col-info">
+              <div class="title-line">
+                <span class="item-id">${escapeHtml(formatItemNumber(item.id))}.</span>
+                <span class="item-name">${escapeHtml(item.name)}</span>
+              </div>
+              <div class="tags-group">${tagsHtml}</div>
+              <div class="flavor-notes">${escapeHtml(item.notes)}</div>
+            </div>
+
+            <div class="coffee-row-prices">
+              <div class="col-cup">
+                <span class="cup-price">$${item.cupPrice}</span>
+              </div>
+              <div class="col-package">
+                <div class="pkg-row">
+                  <span class="pkg-label">熟豆 200g：</span>
+                  <span class="pkg-val">$${item.beansPrice200g}</span>
+                </div>
+                <div class="pkg-row">
+                  <span class="pkg-label">濾掛 10包：</span>
+                  <span class="pkg-val">$${item.dripPrice10pk}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+
+      sheet.innerHTML = `
+        ${pageIndicator}
+        <header class="menu-header">
+          <div class="header-en-title">${escapeHtml(brand.enTitle)}</div>
+          <h1 class="header-brand-name">${escapeHtml(brand.name)}</h1>
+          <div class="header-menu-subtitle">${pageSubtitle}</div>
+        </header>
+
+        <section class="notice-bar">
+          <div class="notice-item"><svg class="notice-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/><path d="M6 12h.01M18 12h.01"/></svg> <span class="notice-badge">僅限現金支付</span></div>
+          <div class="notice-item"><svg class="notice-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="2" x2="6" y2="4"/><line x1="10" y1="2" x2="10" y2="4"/><line x1="14" y1="2" x2="14" y2="4"/></svg> 標示 <span class="notice-badge">[可拿鐵]</span> 品項 +20元 可製作成拿鐵</div>
+          <div class="notice-item"><svg class="notice-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg> 熟豆包裝：200g / 濾掛包：10包裝</div>
+        </section>
+
+        <div class="table-header">
+          <div>品名與風味敘述 (Single Origin)</div>
+          <div class="th-col-price">單杯手沖</div>
+          <div class="th-col-package">熟豆 / 濾掛外帶價格</div>
+        </div>
+
+        <section class="coffee-list">
+          ${itemsHtml}
+        </section>
+
+        <footer class="menu-footer">
+          ${escapeHtml(brand.footerSlogan)}
+        </footer>
+      `;
+
+      return sheet;
+    }
+
+    /* ==============================================================================
+       👑 風格四：酒紅經典品牌版 (風格一酒紅燙金底蘊 ＋ 風格三八瓣花旋與燙金紅仙水標)
+       ============================================================================== */
+    function createWineBrandSheetElement(items, pageNum, totalPages, isA4, brand) {
+      const sheet = document.createElement('article');
+      sheet.className = 'a4-sheet';
+
+      const pageSubtitle = isA4 ? `${escapeHtml(brand.menuTitle)} (${pageNum}/${totalPages})` : escapeHtml(brand.menuTitle);
+      const pageIndicator = isA4 ? `<div class="sheet-page-indicator">第 ${pageNum} 頁 / 共 ${totalPages} 頁</div>` : '';
+
+      let itemsHtml = '';
+      items.forEach(item => {
+        let tagsHtml = '';
+        if (item.process) tagsHtml += `<span class="tag-pill tag-process">${escapeHtml(item.process)}</span>`;
+        if (item.roast) tagsHtml += `<span class="tag-pill tag-roast">${escapeHtml(item.roast)}</span>`;
+        if (item.canLatte) {
+          tagsHtml += `<span class="tag-pill tag-latte"><img src="./assets/badge_heart_wine.png" class="tag-latte-heart" alt="愛心"> 可拿鐵</span>`;
+        }
+
+        itemsHtml += `
+          <div class="coffee-item-row">
+            <div class="col-info">
+              <div class="title-line">
+                <span class="item-id">${escapeHtml(formatItemNumber(item.id))}.</span>
+                <span class="item-name">${escapeHtml(item.name)}</span>
+              </div>
+              <div class="tags-group">${tagsHtml}</div>
+              <div class="flavor-notes">${escapeHtml(item.notes)}</div>
+            </div>
+
+            <div class="coffee-row-prices">
+              <div class="col-cup">
+                <span class="cup-price">$${item.cupPrice}</span>
+              </div>
+              <div class="col-package">
+                <div class="pkg-row">
+                  <span class="pkg-label">熟豆 200g：</span>
+                  <span class="pkg-val">$${item.beansPrice200g}</span>
+                </div>
+                <div class="pkg-row">
+                  <span class="pkg-label">濾掛 10包：</span>
+                  <span class="pkg-val">$${item.dripPrice10pk}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+
+      sheet.innerHTML = `
+        ${pageIndicator}
+        <header class="wine-brand-header">
+          <div class="wine-brand-logo-cluster">
+            <span class="wine-cluster-text">直火</span>
+            <img src="./assets/logo_flower.png" class="wine-flower-logo" alt="紅仙水花旋標誌">
+            <span class="wine-cluster-text">烘豆</span>
+          </div>
+          <div class="wine-brand-title-wrap">
+            <img src="./assets/logo_text_gold.svg" class="wine-brand-title-svg" alt="紅仙水" onerror="this.onerror=null; this.src=(window.MENU_ASSETS ? window.MENU_ASSETS.logoTextGoldSvg : './assets/logo_text_gold.svg');">
+          </div>
+          <div class="header-menu-subtitle">${pageSubtitle}</div>
+        </header>
+
+        <section class="notice-bar">
+          <div class="notice-item"><svg class="notice-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/><path d="M6 12h.01M18 12h.01"/></svg> <span class="notice-badge">僅限現金支付</span></div>
+          <div class="notice-item"><img src="./assets/badge_heart_wine.png" class="wine-notice-heart-icon" alt="愛心" aria-hidden="true"> 標示 <span class="notice-badge">[可拿鐵]</span> 品項 +20元 可製作成拿鐵</div>
+          <div class="notice-item"><svg class="notice-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg> 熟豆包裝：200g / 濾掛包：10包裝</div>
+        </section>
+
+        <div class="table-header">
+          <div>品名與風味敘述 (Single Origin)</div>
+          <div class="th-col-price">單杯手沖</div>
+          <div class="th-col-package">熟豆 / 濾掛外帶價格</div>
+        </div>
+
+        <section class="coffee-list">
+          ${itemsHtml}
+        </section>
+
+        <footer class="menu-footer">
+          ${escapeHtml(brand.footerSlogan)}
+        </footer>
+      `;
+
+      return sheet;
+    }
+
+    /* ==============================================================================
+       🍹 第 3 頁：紅仙水特調飲品 (Special Drinks - 100% HTML & CSS 定義)
+       ============================================================================== */
+    function createDrinksSheetElement(pageNum, totalPages, isA4) {
+      const sheet = document.createElement('article');
+      sheet.className = 'a4-sheet sheet-drinks';
+
+      const pageIndicator = isA4 ? `<div class="sheet-page-indicator" style="color: #845334;">第 ${pageNum} 頁 / 共 ${totalPages} 頁</div>` : '';
+      const drinksData = window.SPECIAL_DRINKS_DATA || { items: [] };
+      const items = drinksData.items || [];
+      const header = drinksData.header || {};
+
+      const itemAm = items.find(i => i.id === 'drink-01') || { name: '冰美式', enName: 'ICE AMERICAN', price: '100元', imageFile: './assets/drink_ice_americano.png', imageKey: 'drinkIceAmericano' };
+      const itemMa = items.find(i => i.id === 'drink-02') || { name: '抹茶奶蓋', enName: 'MATCHA LATTE', subName: '小山園抹茶', price: '150元', imageFile: './assets/drink_matcha_latte.png', imageKey: 'drinkMatchaLatte' };
+      const itemOr = items.find(i => i.id === 'drink-03') || { name: '幻紫 OREO', subName: '小山園抹茶', price: '160元', imageFile: './assets/drink_oreo_matcha.png', imageKey: 'drinkOreoMatcha' };
+      const itemLa = items.find(i => i.id === 'drink-04') || { name: 'HOT LATTE 熱拿', subName: '衣索比亞藝伎豆', price: '150元', imageFile: './assets/drink_hot_latte.png', imageKey: 'drinkHotLatte' };
+
+      const imgCloud = getAssetUrl('cloudTitleDrinks', './assets/cloud_title_drinks.png');
+      const imgSuige = getAssetUrl('stickerSuige', './assets/sticker_suige.png');
+      const imgShuimei = getAssetUrl('stickerShuimei', './assets/sticker_shuimei.png');
+      const imgAm = getAssetUrl('drinkIceAmericano', itemAm.imageFile);
+      const imgMa = getAssetUrl('drinkMatchaLatte', itemMa.imageFile);
+      const imgOr = getAssetUrl('drinkOreoMatcha', itemOr.imageFile);
+      const imgLa = getAssetUrl('drinkHotLatte', itemLa.imageFile);
+
+      sheet.innerHTML = `
+        ${pageIndicator}
+        <div class="drinks-container">
+          <!-- 左側欄位 -->
+          <div class="drinks-col-left">
+            <div class="drinks-header-cluster">
+              <img src="${imgCloud}" class="drinks-cloud-title-img" alt="${escapeHtml(header.cloudTitle || '紅仙水特調')}">
+              <img src="${imgSuige}" class="drinks-suige-sticker-img" alt="水哥手沖咖啡師">
+              <div class="drinks-brand-text-block">
+                <div class="drinks-brand-en">${escapeHtml(header.brandEn || 'COFFEE RED')}</div>
+                <div class="drinks-brand-jp">${escapeHtml(header.brandJp || 'コーヒーレッド')}</div>
+              </div>
+              <div class="drinks-tag-left-matcha">${escapeHtml(itemMa.name)}</div>
+            </div>
+
+            <!-- 幻紫 OREO 小山園抹茶 -->
+            <div class="drink-card-oreo">
+              <div class="drink-photo-frame-oreo">
+                <img src="${imgOr}" alt="${escapeHtml(itemOr.name)}">
+              </div>
+              <div class="drink-oreo-footer">
+                <div class="drink-oreo-titles">
+                  <span class="drink-oreo-main-name">${escapeHtml(itemOr.name)}</span>
+                  <span class="drink-oreo-sub-name">${escapeHtml(itemOr.subName || '')}</span>
+                </div>
+                <div class="drink-price-bubble bubble-oreo">${escapeHtml(itemOr.price)}</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 右側欄位 -->
+          <div class="drinks-col-right">
+            <!-- 冰美式 -->
+            <div class="drink-photo-card">
+              <div class="drink-photo-frame" style="width: 255px; height: 185px;">
+                <img src="${imgAm}" alt="${escapeHtml(itemAm.name)}">
+                <div class="drink-price-bubble bubble-americano">${escapeHtml(itemAm.price)}</div>
+              </div>
+              <div class="drink-banner-brown drink-banner-americano">${escapeHtml(itemAm.name)}</div>
+              <div class="drink-sub-americano">${escapeHtml(itemAm.enName || '')}</div>
+            </div>
+
+            <!-- 抹茶奶蓋 / MATCHA LATTE -->
+            <div class="drink-photo-card" style="margin-top: 10px;">
+              <div class="drink-photo-frame drink-photo-frame-matcha">
+                <img src="${imgMa}" alt="${escapeHtml(itemMa.name)}">
+                <div class="drink-price-bubble bubble-matcha">${escapeHtml(itemMa.price)}</div>
+              </div>
+              <div class="drink-matcha-info">
+                <div class="drink-banner-brown">${escapeHtml(itemMa.enName || 'MATCHA LATTE')}</div>
+                <div class="drink-matcha-sub">${escapeHtml(itemMa.subName || '小山園抹茶')}</div>
+              </div>
+            </div>
+
+            <!-- 熱拿鐵 HOT LATTE -->
+            <div class="drink-card-latte">
+              <div class="drink-photo-frame drink-photo-frame-latte">
+                <img src="${imgLa}" alt="${escapeHtml(itemLa.name)}">
+                <div class="drink-price-bubble bubble-latte">${escapeHtml(itemLa.price)}</div>
+              </div>
+              <div class="drink-latte-info">
+                <div class="drink-banner-brown">${escapeHtml(itemLa.name)}</div>
+                <div class="drink-latte-sub">${escapeHtml(itemLa.subName || '')}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 水妹插畫貼紙 (置於中下方交疊處) -->
+        <div class="drinks-shuimei-wrapper">
+          <img src="${imgShuimei}" class="drinks-shuimei-sticker-img" alt="水妹">
+          <span class="drinks-shuimei-label">水妹</span>
+        </div>
+      `;
+
+      return sheet;
+    }
+
+    /* ==============================================================================
+       🍞 第 4 頁：老闆推薦 今日品項 / 甜點輕食 (100% HTML & CSS 定義)
+       ============================================================================== */
+    function createBakerySheetElement(pageNum, totalPages, isA4) {
+      const sheet = document.createElement('article');
+      sheet.className = 'a4-sheet sheet-bakery';
+
+      const pageIndicator = isA4 ? `<div class="sheet-page-indicator" style="color: #D48B3D;">第 ${pageNum} 頁 / 共 ${totalPages} 頁</div>` : '';
+      const bakeryData = window.BAKERY_MENU_DATA || { items: [] };
+      const items = bakeryData.items || [];
+      const header = bakeryData.header || {};
+
+      let itemsHtml = '';
+      items.forEach(item => {
+        const veganBadge = item.badge ? `<div class="bakery-vegan-pill">${escapeHtml(item.badge)}</div>` : '';
+        const itemImg = getAssetUrl(item.imageKey, item.imageFile);
+        itemsHtml += `
+          <div class="bakery-item-card">
+            <div class="bakery-img-box">
+              ${veganBadge}
+              <img src="${itemImg}" alt="${escapeHtml(item.name)}">
+            </div>
+            <div class="bakery-tag-pill">${escapeHtml(item.name)}</div>
+            <div class="bakery-price-text">${escapeHtml(item.price)}</div>
+          </div>
+        `;
+      });
+
+      const imgCookies = getAssetUrl('cookieBar', './assets/cookie_bar.png');
+
+      sheet.innerHTML = `
+        ${pageIndicator}
+        <header class="bakery-top-bar">
+          <img src="${imgCookies}" class="bakery-cookie-img" alt="手作小餅乾裝飾條">
+          <div class="bakery-cursive-sub">${escapeHtml(header.subTitle || 'fresh from the bakery!')}</div>
+          <h2 class="bakery-main-title">
+            <span class="bakery-title-white">${escapeHtml(header.titlePrefix || '老闆推薦')}</span>
+            <span class="bakery-title-orange">${escapeHtml(header.titleHighlight || '今日品項')}</span>
+          </h2>
+        </header>
+
+        <div class="bakery-grid">
+          ${itemsHtml}
+        </div>
+      `;
+
+      return sheet;
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    // 初始化：預設套用風格一（經典酒紅雅致 - 標準 A4 出血卡片版型）
+    setTheme('wine');
+  </script>
+</body>
+</html>

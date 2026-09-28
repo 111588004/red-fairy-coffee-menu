@@ -1,0 +1,720 @@
+/* ==============================================================================
+   ☕ 紅仙水 (HAND DRIP COFFEE) - 價目表樣式表 (走向 B：大字級 + 完美手機端 Wrap)
+   ==============================================================================
+   💡【Design Tokens 設計標記】：
+   後續拿到 Canva 設計稿時，只要在這裡調整色票、字體與陰影，全站會同步換裝。
+   ============================================================================== */
+
+:root {
+  /* 品牌核心色彩（以原 PDF 紅仙水深酒紅為基底） */
+  --color-brand-wine: #781d22;
+  --color-brand-wine-dark: #5e1317;
+  --color-brand-gold: #e2c18d;
+  --color-brand-gold-light: #fbf7f0;
+  
+  /* 中性背景與表面色 */
+  --color-bg-page: #e8e4dc;
+  --color-bg-card: #ffffff;
+  --color-bg-subtle: #fcfbfa;
+  --color-border: #e6e0d6;
+  --color-border-light: #ece7de;
+  
+  /* 文字階層色 (全面提升對比度至 WCAG AAA 級距) */
+  --color-text-main: #111111;
+  --color-text-muted: #282828;
+  --color-text-light: #525252;
+  --color-text-price: #82151b;
+
+  /* 標籤（Pills）調色盤 (提升字重與高可讀色彩) */
+  --tag-process-bg: #eef2f7;
+  --tag-process-text: #162a45;
+  --tag-process-border: #c2d0e0;
+
+  --tag-roast-bg: #fde8e8;
+  --tag-roast-text: #821515;
+  --tag-roast-border: #f8b4b4;
+
+  --tag-latte-bg: #fef3c7;
+  --tag-latte-text: #713f12;
+  --tag-latte-border: #fcd34d;
+
+  /* 字體組合 */
+  --font-serif: "Noto Serif TC", "Songti SC", "Source Han Serif TC", Georgia, serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft JhengHei", "Noto Sans TC", sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+}
+
+/* 鍵盤無障礙焦點光環 (WCAG 2.4.7 Focus Visible) */
+:focus-visible {
+  outline: 2.5px solid var(--color-brand-wine);
+  outline-offset: 2.5px;
+}
+
+/* 基礎重設 */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-bg-page);
+  color: var(--color-text-main);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  padding: 16px 12px 60px 12px;
+  overflow-x: hidden;
+}
+
+/* 頂部控制列 */
+.controls-toolbar {
+  max-width: 820px;
+  margin: 0 auto 20px auto;
+  background: #ffffff;
+  padding: 12px 18px;
+  border-radius: var(--radius-md);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+  border: 1px solid var(--color-border);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.toolbar-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.95rem;
+}
+
+.toolbar-label {
+  font-weight: 700;
+  color: var(--color-text-main);
+  font-size: 0.95rem;
+}
+
+.segmented-control {
+  display: inline-flex;
+  background: #ede8e1;
+  padding: 4px;
+  border-radius: 8px;
+  gap: 3px;
+}
+
+.seg-btn {
+  border: none;
+  background: transparent;
+  padding: 8px 14px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #333333;
+  border-radius: 5px;
+  cursor: pointer;
+  min-height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.seg-btn:hover {
+  color: #000000;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.seg-btn.active {
+  background: #ffffff;
+  color: var(--color-brand-wine-dark);
+  font-weight: 800;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.12);
+}
+
+.select-input {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1.5px solid #d4cdc2;
+  font-size: 0.92rem;
+  font-weight: 600;
+  background: #fff;
+  color: var(--color-text-main);
+  cursor: pointer;
+  min-height: 38px;
+}
+
+.btn-print {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--color-brand-wine);
+  color: #ffffff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 0.94rem;
+  font-weight: 700;
+  cursor: pointer;
+  min-height: 38px;
+  transition: background-color 0.15s ease;
+  white-space: nowrap;
+}
+
+.btn-print:hover {
+  background: var(--color-brand-wine-dark);
+}
+
+.pages-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 36px;
+  width: 100%;
+}
+
+/* ==============================================================================
+   📄 A4 紙張與連續滾動結構
+   ============================================================================== */
+.a4-sheet {
+  width: 100%;
+  max-width: 820px;
+  min-height: 1120px;
+  background: #ffffff;
+  border-radius: 2px;
+  box-shadow: 0 10px 36px rgba(0, 0, 0, 0.13), 0 2px 6px rgba(0, 0, 0, 0.05);
+  border: 1px solid #d4cec3;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.2s ease;
+}
+
+/* 風格一（經典酒紅雅致）與風格四（酒紅品牌版）：完全滿版無嵌套 padding，內文保留寬裕邊距 (46px) */
+body.theme-wine .a4-sheet,
+body.theme-wine-brand .a4-sheet {
+  background-color: #ffffff;
+  border: 1px solid #d4cec3;
+  padding: 0;
+  box-shadow: 0 10px 36px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+body.mode-continuous .a4-sheet {
+  min-height: auto;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+  border-radius: 12px;
+}
+
+body.mode-continuous .sheet-page-indicator {
+  display: none;
+}
+
+.sheet-page-indicator {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  background: rgba(0, 0, 0, 0.45);
+  color: #fff;
+  font-size: 0.75rem;
+  padding: 3px 10px;
+  border-radius: 12px;
+  letter-spacing: 0.06em;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* 1. Header (風格一 原版：完全滿版，內文 66px 對齊風格三) */
+.menu-header {
+  background: linear-gradient(135deg, var(--color-brand-wine) 0%, var(--color-brand-wine-dark) 100%);
+  color: #ffffff;
+  text-align: center;
+  padding: 30px 66px 22px 66px;
+  border-bottom: 4px solid var(--color-brand-gold);
+  border-radius: 0;
+}
+
+/* 1.1 Header (酒紅經典品牌版 - 風格四 / 融合版)：完全滿版，內文 66px 對齊風格三 */
+.wine-brand-header {
+  background: linear-gradient(135deg, var(--color-brand-wine) 0%, var(--color-brand-wine-dark) 100%);
+  color: #ffffff;
+  text-align: center;
+  padding: 24px 66px 20px 66px;
+  border-bottom: 4px solid var(--color-brand-gold);
+  border-radius: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.wine-brand-logo-cluster {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 2px;
+}
+
+.wine-cluster-text {
+  font-family: var(--font-sans);
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--color-brand-gold);
+  letter-spacing: 2px;
+  text-indent: 2px;
+}
+
+.wine-flower-logo {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+  filter: none;
+}
+
+.wine-brand-title-wrap {
+  margin: 4px 0 8px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.wine-brand-title-svg {
+  height: 38px;
+  width: auto;
+  max-width: 175px;
+  object-fit: contain;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.25));
+}
+
+.header-en-title {
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--color-brand-gold);
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+
+.header-brand-name {
+  font-family: var(--font-serif);
+  font-size: clamp(2.0rem, 5vw, 2.75rem);
+  letter-spacing: 0.3em;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.25;
+  text-indent: 0.3em;
+}
+
+.header-menu-subtitle {
+  font-size: clamp(0.95rem, 2.5vw, 1.12rem);
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  color: rgba(255, 255, 255, 0.92);
+  margin-top: 6px;
+}
+
+/* 2. Notice Bar (滿版橫幅，內文 66px 對齊風格三，WCAG AAA 高對比度) */
+.notice-bar {
+  background-color: var(--color-brand-gold-light);
+  border-bottom: 1.5px solid #ded6c8;
+  border-top: none;
+  border-radius: 0;
+  padding: 14px 66px;
+  margin-bottom: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 12px 28px;
+  font-size: 1.02rem;
+  font-weight: 600;
+  color: #262018;
+  line-height: 1.5;
+}
+
+.notice-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  line-height: 1.45;
+}
+
+.notice-badge {
+  font-weight: 800;
+  color: var(--color-brand-wine);
+}
+
+.notice-icon {
+  width: 18px;
+  height: 18px;
+  stroke: var(--color-brand-wine);
+  stroke-width: 2.3;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+
+/* 3. Table Header (滿版曜黑條，內文 66px 對齊風格三) */
+.table-header {
+  background-color: #161616;
+  color: #ffffff;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 88px 180px;
+  column-gap: 16px;
+  padding: 15px 66px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  align-items: center;
+  border-radius: 0;
+  margin-bottom: 0;
+}
+
+.th-col-price {
+  text-align: right;
+}
+
+.th-col-package {
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* ==============================================================================
+   4. Coffee List（滿版直通，純分隔線架構，內文 66px 對齊風格三）
+   ============================================================================== */
+.coffee-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  flex-grow: 1;
+}
+
+.coffee-item-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 88px 180px;
+  column-gap: 16px;
+  padding: 17px 66px;
+  background: transparent;
+  border: none;
+  border-bottom: 1.5px solid var(--color-border-light);
+  border-radius: 0;
+  box-shadow: none;
+  align-items: center;
+  flex-grow: 0;
+  transition: background-color 0.15s ease;
+}
+
+.coffee-item-row:hover {
+  background-color: var(--color-bg-subtle);
+}
+
+.col-info {
+  padding-right: 0;
+  min-width: 0;
+}
+
+.title-line {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.item-id {
+  font-family: var(--font-mono);
+  font-size: 1.35rem;
+  font-weight: 900;
+  color: var(--color-brand-wine);
+  letter-spacing: -0.02em;
+  flex-shrink: 0;
+}
+
+.item-name {
+  font-family: "PingFang SC", -apple-system, BlinkMacSystemFont, "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+  font-size: clamp(1.15rem, 2.5vw, 1.28rem);
+  font-weight: 900;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-stroke: 0.25px currentColor;
+  color: var(--color-text-main);
+  letter-spacing: 0.02em;
+  line-height: 1.35;
+  word-break: break-word;
+}
+
+.tags-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.tag-pill {
+  font-size: 0.92rem;
+  padding: 3px 9px;
+  border-radius: 4px;
+  font-weight: 700;
+  line-height: 1.3;
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.tag-process {
+  background: var(--tag-process-bg);
+  color: var(--tag-process-text);
+  border: 1px solid var(--tag-process-border);
+}
+
+.tag-roast {
+  background: var(--tag-roast-bg);
+  color: var(--tag-roast-text);
+  border: 1px solid var(--tag-roast-border);
+}
+
+.tag-latte {
+  background: var(--tag-latte-bg);
+  color: var(--tag-latte-text);
+  border: 1px solid var(--tag-latte-border);
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tag-latte-heart {
+  width: 15px;
+  height: 15px;
+  object-fit: contain;
+  vertical-align: middle;
+}
+
+.tag-latte-mug-icon {
+  width: 14px;
+  height: 14px;
+  stroke: var(--tag-latte-text);
+  stroke-width: 2.3;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+
+.wine-notice-heart-icon {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  vertical-align: middle;
+}
+
+.flavor-notes {
+  font-size: clamp(0.98rem, 2vw, 1.05rem);
+  font-weight: 500;
+  color: #262626;
+  line-height: 1.68;
+  letter-spacing: 0.025em;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+/* 關鍵技術：桌機模式下使用 display: contents，讓價格子元素直接對齊父級 Grid */
+.coffee-row-prices {
+  display: contents;
+}
+
+.col-cup {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.cup-price {
+  font-family: var(--font-sans);
+  font-size: 1.85rem;
+  font-weight: 900;
+  color: var(--color-text-price);
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+
+.col-package {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 1.02rem;
+  color: #1a1a1a;
+}
+
+.pkg-row {
+  display: flex;
+  justify-content: flex-end;
+  align-items: baseline;
+  gap: 9px;
+  white-space: nowrap;
+}
+
+.pkg-label {
+  color: #383838;
+  font-weight: 600;
+  font-size: 1.0rem;
+}
+
+.pkg-val {
+  font-family: var(--font-sans);
+  font-weight: 900;
+  color: #111111;
+  min-width: 58px;
+  font-size: 1.2rem;
+  letter-spacing: -0.02em;
+  text-align: right;
+}
+
+/* 5. Footer (滿版頁尾，內文 66px 對齊風格三) */
+.menu-footer {
+  background: transparent;
+  border-top: 1.5px solid #ded8cc;
+  text-align: center;
+  padding: 20px 66px 16px 66px;
+  font-size: 1.02rem;
+  font-weight: 700;
+  color: #3d3d3d;
+  letter-spacing: 0.08em;
+  margin-top: auto;
+}
+
+/* ==============================================================================
+   📱 手機與窄螢幕 Breakpoint (<= 720px) 響應式 Wrap
+   ============================================================================== */
+@media (max-width: 720px) {
+  body {
+    padding: 10px 6px 40px 6px;
+  }
+
+  .controls-toolbar {
+    padding: 10px 14px;
+    gap: 10px;
+  }
+
+  .table-header {
+    display: none;
+  }
+
+  .coffee-item-row {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+    padding: 18px 16px;
+  }
+
+  .col-info {
+    padding-right: 0;
+  }
+
+  /* 價格區塊在手機端 Wrap 成獨立底色卡片 */
+  .coffee-row-prices {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    background: #f8f6f2;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 10px 14px;
+    gap: 10px;
+    margin-top: 4px;
+  }
+
+  .col-cup {
+    text-align: left;
+    align-items: flex-start;
+  }
+
+  .cup-price {
+    font-size: 1.45rem;
+    display: flex;
+    align-items: baseline;
+    gap: 5px;
+  }
+
+  .cup-price::before {
+    content: "手沖單杯";
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+  }
+
+  .col-package {
+    text-align: right;
+    font-size: 0.9rem;
+  }
+
+  .notice-bar {
+    padding: 10px 14px;
+    font-size: 0.84rem;
+    justify-content: flex-start;
+  }
+}
+
+/* ==============================================================================
+   🖨️ 列印 (@media print) 精準 1:1 分頁
+   ============================================================================== */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 0;
+  }
+
+  body {
+    background: #ffffff !important;
+    padding: 0 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .controls-toolbar, .sheet-page-indicator {
+    display: none !important;
+  }
+
+  .pages-stage {
+    gap: 0 !important;
+  }
+
+  .a4-sheet {
+    box-shadow: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    max-width: 100% !important;
+    min-height: 297mm !important;
+    page-break-after: always !important;
+    break-after: page !important;
+    margin-bottom: 0 !important;
+    padding: 0 !important;
+  }
+
+  .a4-sheet:last-child {
+    page-break-after: auto !important;
+    break-after: auto !important;
+  }
+
+  .table-header {
+    padding: 14px 66px !important;
+  }
+
+  .coffee-item-row {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    padding: 22px 66px !important;
+  }
+}
