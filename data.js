@@ -19,7 +19,7 @@ window.COFFEE_MENU_DATA = {
   notices: [
     { type: "cash", text: "僅限現金支付" },
     { type: "latte", text: "標示 [可拿鐵] 品項 +20元 可製作成拿鐵" },
-    { type: "package", text: "熟豆包裝：200g / 濾掛包：10包裝 (每包 12g)" }
+    { type: "package", text: "販售熟豆 200g ｜ 濾掛 12g (10包)" }
   ],
 
   items: [

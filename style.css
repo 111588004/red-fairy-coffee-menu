@@ -721,7 +721,7 @@ body.mode-continuous .sheet-page-indicator {
   display: flex;
   align-items: baseline;
   gap: 5.1px;
-  margin-bottom: 5.1px;
+  margin-bottom: 9px;
 }
 
 .item-id {
@@ -750,7 +750,7 @@ body.mode-continuous .sheet-page-indicator {
   flex-wrap: wrap;
   align-items: center;
   gap: 5.1px;
-  margin-bottom: 5.1px;
+  margin-bottom: 8.5px;
 }
 
 .tag-pill {

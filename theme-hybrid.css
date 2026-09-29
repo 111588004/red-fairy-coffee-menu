@@ -175,7 +175,7 @@ body.theme-hybrid .hybrid-title-line {
   display: flex;
   align-items: baseline;
   gap: 5.1px;
-  margin-bottom: 5.1px;
+  margin-bottom: 9px;
 }
 
 body.theme-hybrid .hybrid-item-id {
@@ -204,7 +204,7 @@ body.theme-hybrid .hybrid-tags-group {
   align-items: center;
   gap: 5.1px;
   flex-wrap: wrap;
-  margin-bottom: 5.1px;
+  margin-bottom: 8.5px;
 }
 
 /* 標籤設計：極簡直火風（高對比度 + 清晰識別） */
