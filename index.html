@@ -210,6 +210,9 @@
       logBox.textContent = `[${new Date().toLocaleTimeString()}] ${msg}`;
     }
 
+    // ==============================================================================
+    // ⚡ 智能自然語言指令調控台 (Smart NLP Command Engine)
+    // ==============================================================================
     function executeCommands() {
       backupInitialData();
       const ta = document.getElementById('cmd-textarea');
@@ -217,6 +220,7 @@
 
       const raw = ta.value.trim();
       let logs = [];
+      const items = window.COFFEE_MENU_DATA.items;
 
       // 支援 A：若輸入是完整 JSON，直接覆蓋菜單資料
       if (raw.startsWith('{') && raw.endsWith('}')) {
@@ -229,82 +233,192 @@
             return;
           }
         } catch (e) {
-          // 不是單一 json，繼續以文字指令解析
+          // 不是單一 json，繼續以自然語言/指令解析
         }
       }
 
-      // 支援 B：文字快捷行指令解析
-      const lines = raw.split('\n').map(l => l.trim()).filter(Boolean);
-      const items = window.COFFEE_MENU_DATA.items;
+      // 輔助函式：根據名稱或編號查找品項
+      function findItem(query) {
+        if (!query) return null;
+        const q = String(query).trim().toLowerCase().replace(/號|款|第/g, '');
+        return items.find(it => 
+          it.id === q || 
+          it.name.toLowerCase().includes(q) || 
+          (it.dotName && it.dotName.toLowerCase().includes(q))
+        );
+      }
 
-      lines.forEach((line, idx) => {
-        const parts = line.split(/\s+/);
+      // 輔助函式：從字串提取所有品項 ID（支援「1、3、4、5」、「1,2,3」、「2345679」、「1 2 3」）
+      function extractItemIds(str) {
+        let matchedIds = new Set();
+        // 情況 1：連寫數字例如 2345679 或 1345
+        const compactNumMatch = str.match(/\b([1-9]{2,9})\b/);
+        if (compactNumMatch) {
+          compactNumMatch[1].split('').forEach(n => matchedIds.add(n));
+        }
+        // 情況 2：頓號/逗號/空格隔開的數字，例如 1、3、4、5 或 1, 3, 4, 5
+        const tokens = str.split(/[、,，\s\+與和]+/);
+        tokens.forEach(t => {
+          const clean = t.replace(/第|款|號/g, '').trim();
+          if (/^[1-9]$/.test(clean)) {
+            matchedIds.add(clean);
+          } else {
+            const it = findItem(clean);
+            if (it) matchedIds.add(it.id);
+          }
+        });
+        return Array.from(matchedIds);
+      }
+
+      // 拆分子句：以換行、分號、句號切割
+      const rawSentences = raw.split(/[\n;；。]+/).map(s => s.trim()).filter(Boolean);
+
+      rawSentences.forEach(sentence => {
+        // ----------------------------------------------------
+        // 場景 1：拿鐵相關指令 (支援「1、3、4、5 改成拿鐵，其他不要拿鐵」)
+        // ----------------------------------------------------
+        if (/拿鐵|latte/i.test(sentence)) {
+          // 檢查是否包含「其他不要 / 其餘不要」
+          const hasOtherNegative = /其他.*(不要|不可|不能|取消|關閉)|其餘.*(不要|不可|不能|取消|關閉)/.test(sentence);
+
+          // 切分成前後半段（例如「1、3、4、5 改成拿鐵」與「其他不要拿鐵」）
+          const clauses = sentence.split(/[，,]/).map(c => c.trim()).filter(Boolean);
+
+          clauses.forEach(clause => {
+            const isNegative = /不要|不能|不可|取消|關閉|off|false/i.test(clause);
+            const isAll = /全部|所有人|大家|通通/i.test(clause);
+            const isOther = /其他|其餘/i.test(clause);
+
+            if (isAll) {
+              items.forEach(it => it.canLatte = !isNegative);
+              logs.push(`✓ 已將【全部品項】可拿鐵改為：${!isNegative ? '開啟 [可拿鐵]' : '關閉'}`);
+            } else if (isOther && isNegative) {
+              // 其他不要拿鐵：已在正向處理時被排除，維持當前設定
+            } else {
+              const targetIds = extractItemIds(clause);
+              if (targetIds.length > 0) {
+                targetIds.forEach(id => {
+                  const it = items.find(item => item.id === id);
+                  if (it) it.canLatte = !isNegative;
+                });
+                logs.push(`✓ [品項 ${targetIds.join(', ')}] 已設定為：${!isNegative ? '開啟 [可拿鐵]' : '關閉拿鐵'}`);
+                
+                // 若這句同時帶有「其他不要拿鐵」，自動將其餘品項關閉
+                if (hasOtherNegative && !isNegative) {
+                  items.forEach(it => {
+                    if (!targetIds.includes(it.id)) it.canLatte = false;
+                  });
+                  logs.push(`✓ 其餘品項已全部自動設為【不含拿鐵】`);
+                }
+              }
+            }
+          });
+          return;
+        }
+
+        // ----------------------------------------------------
+        // 場景 2：價格修改 (支援「肯亞 單杯 180」、「4 熟豆改 650」)
+        // ----------------------------------------------------
+        const priceMatch = sentence.match(/(?:改|設|為|成|\$)?\s*(\d{2,4})\s*(?:元)?/);
+        if (priceMatch && !/^[1-9]$/.test(priceMatch[1])) {
+          const priceVal = parseInt(priceMatch[1], 10);
+          // 找出品項
+          let matchedItem = null;
+          for (let it of items) {
+            if (sentence.includes(it.id) || sentence.includes(it.name) || (it.dotName && sentence.includes(it.dotName))) {
+              matchedItem = it;
+              break;
+            }
+          }
+          // 嘗試提取品項開頭編號
+          if (!matchedItem) {
+            const idM = sentence.match(/(?:第)?([1-9])(?:款|號)?/);
+            if (idM) matchedItem = items.find(it => it.id === idM[1]);
+          }
+
+          if (matchedItem) {
+            if (/熟豆|200g|豆/i.test(sentence)) {
+              matchedItem.beansPrice200g = priceVal;
+              logs.push(`✓ [品項 ${matchedItem.id}] ${matchedItem.name}：熟豆 200g 價格改為 $${priceVal}`);
+            } else if (/濾掛|掛|10包|12g/i.test(sentence)) {
+              matchedItem.dripPrice10pk = priceVal;
+              logs.push(`✓ [品項 ${matchedItem.id}] ${matchedItem.name}：濾掛 10包 價格改為 $${priceVal}`);
+            } else {
+              // 預設為單杯價格
+              matchedItem.cupPrice = priceVal;
+              logs.push(`✓ [品項 ${matchedItem.id}] ${matchedItem.name}：單杯手沖價格改為 $${priceVal}`);
+            }
+            return;
+          }
+        }
+
+        // ----------------------------------------------------
+        // 場景 3：焙度修改 (支援「1 號改淺中焙」、「耶加 淺焙」)
+        // ----------------------------------------------------
+        const roastMatch = sentence.match(/(極淺焙|淺中焙|中深焙|淺焙|中焙|深焙)/);
+        if (roastMatch) {
+          const roastVal = roastMatch[1];
+          const targetIds = extractItemIds(sentence);
+          if (targetIds.length > 0) {
+            targetIds.forEach(id => {
+              const it = items.find(item => item.id === id);
+              if (it) it.roast = roastVal;
+            });
+            logs.push(`✓ [品項 ${targetIds.join(', ')}] 焙度已改為：${roastVal}`);
+            return;
+          }
+        }
+
+        // ----------------------------------------------------
+        // 場景 4：處理法修改 (支援「1 水洗」、「4 日曬 G1」)
+        // ----------------------------------------------------
+        const procMatch = sentence.match(/(水洗\s*G1|日曬\s*G1|特殊發酵水洗|雙重厭氧|酒桶浸漬日曬\s*G1|水洗|日曬|蜜處理|厭氧)/);
+        if (procMatch) {
+          const procVal = procMatch[1];
+          const targetIds = extractItemIds(sentence);
+          if (targetIds.length > 0) {
+            targetIds.forEach(id => {
+              const it = items.find(item => item.id === id);
+              if (it) it.process = procVal;
+            });
+            logs.push(`✓ [品項 ${targetIds.join(', ')}] 處理法已改為：${procVal}`);
+            return;
+          }
+        }
+
+        // ----------------------------------------------------
+        // 場景 5：傳統命令相容 (set-price, set-latte, set-roast)
+        // ----------------------------------------------------
+        const parts = sentence.split(/\s+/);
         const action = parts[0].toLowerCase();
-
-        // 1. set-price <id/名稱> <cup|beans|drip> <金額>
-        // 例如：set-price 4 cup 180 或 set-price 肯亞 cup 180
-        if (action === 'set-price' || action === 'price' || action === '改價格') {
+        if (action === 'set-price') {
           const target = parts[1];
           const type = parts[2] ? parts[2].toLowerCase() : 'cup';
           const val = parseInt(parts[3], 10);
-
-          const item = items.find(it => it.id === target || it.name.includes(target) || String(it.id) === target);
+          const item = findItem(target);
           if (item && !isNaN(val)) {
-            if (type === 'cup' || type === '單杯') item.cupPrice = val;
-            else if (type === 'beans' || type === '熟豆') item.beansPrice200g = val;
-            else if (type === 'drip' || type === '濾掛') item.dripPrice10pk = val;
-            logs.push(`✓ [品項 ${item.id}] ${item.name}：${type} 價格已更新為 $${val}`);
-          } else {
-            logs.push(`⚠️ 找不到品項「${target}」或金額無效`);
+            if (type === 'cup') item.cupPrice = val;
+            else if (type === 'beans') item.beansPrice200g = val;
+            else if (type === 'drip') item.dripPrice10pk = val;
+            logs.push(`✓ [品項 ${item.id}] ${item.name}：${type} 價格改為 $${val}`);
           }
-        }
-        // 2. set-latte <id/名稱> <true|false|on|off>
-        // 例如：set-latte 8 true 或 拿鐵 8 off
-        else if (action === 'set-latte' || action === 'latte' || action === '拿鐵') {
+        } else if (action === 'set-latte') {
           const target = parts[1];
-          const flag = ['true', 'on', '1', 'yes', '可'].includes(String(parts[2]).toLowerCase());
-          const item = items.find(it => it.id === target || it.name.includes(target));
+          const flag = ['true', 'on', '1', 'yes'].includes(String(parts[2]).toLowerCase());
+          const item = findItem(target);
           if (item) {
             item.canLatte = flag;
-            logs.push(`✓ [品項 ${item.id}] ${item.name}：可拿鐵標示改為 ${flag ? '開啟 [可拿鐵]' : '關閉'}`);
-          } else {
-            logs.push(`⚠️ 找不到品項「${target}」`);
-          }
-        }
-        // 3. set-roast <id/名稱> <淺焙|中焙|淺中焙...>
-        else if (action === 'set-roast' || action === 'roast' || action === '焙度') {
-          const target = parts[1];
-          const roast = parts[2];
-          const item = items.find(it => it.id === target || it.name.includes(target));
-          if (item && roast) {
-            item.roast = roast;
-            logs.push(`✓ [品項 ${item.id}] ${item.name}：焙度更新為 ${roast}`);
-          }
-        }
-        // 4. set-process <id/名稱> <水洗|日曬...>
-        else if (action === 'set-process' || action === 'process' || action === '處理法') {
-          const target = parts[1];
-          const proc = parts[2];
-          const item = items.find(it => it.id === target || it.name.includes(target));
-          if (item && proc) {
-            item.process = proc;
-            logs.push(`✓ [品項 ${item.id}] ${item.name}：處理法更新為 ${proc}`);
-          }
-        }
-        // 5. set-notes <id/名稱> <風味描述文字>
-        else if (action === 'set-notes' || action === 'notes' || action === '風味') {
-          const target = parts[1];
-          const notes = parts.slice(2).join(' ');
-          const item = items.find(it => it.id === target || it.name.includes(target));
-          if (item && notes) {
-            item.notes = notes;
-            logs.push(`✓ [品項 ${item.id}] ${item.name}：風味描述已更新`);
+            logs.push(`✓ [品項 ${item.id}] ${item.name}：拿鐵改為 ${flag ? '開啟' : '關閉'}`);
           }
         }
       });
 
       renderPages();
-      logCmd(logs.join('\n') || '未識別出有效指令');
+      if (logs.length > 0) {
+        logCmd('🚀 執行成功：\n' + logs.join('\n'));
+      } else {
+        logCmd('⚠️ 未能識別出變更指令，請嘗試例如：\n• 1、3、4 改成拿鐵，其他不要\n• 肯亞 單杯改 180\n• 4 號 熟豆 650', false);
+      }
     }
 
     function resetDefaultData() {
