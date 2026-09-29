@@ -29,8 +29,8 @@ body.theme-hybrid {
 body.theme-hybrid .a4-sheet {
   background-color: var(--hybrid-bg);
   border: 1px solid #dfd8cc;
-  box-shadow: 0 10px 36px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.05);
-  padding: 38px 46px 32px 46px;
+  box-shadow: 0 8.5px 30.6px rgba(0, 0, 0, 0.1), 0 2px 5.1px rgba(0, 0, 0, 0.05);
+  padding: 32.3px 39.1px 27.2px 39.1px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -42,13 +42,13 @@ body.theme-hybrid .canva-header {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 14px;
+  margin-bottom: 11.9px;
   position: relative;
 }
 
 /* 確保手繪濾杯壺線條完全不被遮擋或裁切 */
 body.theme-hybrid .canva-dripper-img {
-  height: 62px;
+  height: 52.7px;
   width: auto;
   object-fit: contain;
   overflow: visible;
@@ -59,14 +59,14 @@ body.theme-hybrid .canva-dripper-img {
 body.theme-hybrid .canva-pill-bar-left {
   display: flex;
   align-items: flex-end;
-  gap: 10px;
+  gap: 8.5px;
   overflow: visible;
 }
 
 body.theme-hybrid .canva-pill-badge {
   font-size: 0.95rem;
   font-weight: 800;
-  padding: 7px 16px;
+  padding: 5.9px 13.6px;
   letter-spacing: 1.5px;
 }
 
@@ -76,7 +76,7 @@ body.theme-hybrid .hybrid-header-notices {
   flex-direction: column;
   align-items: flex-end;
   justify-content: flex-end;
-  gap: 5px;
+  gap: 4.2px;
   text-align: right;
 }
 
@@ -84,7 +84,7 @@ body.theme-hybrid .hybrid-notice-line {
   display: inline-flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 8px;
+  gap: 6.8px;
   font-size: 1.02rem;
   font-weight: 700;
   color: #26221c;
@@ -93,8 +93,8 @@ body.theme-hybrid .hybrid-notice-line {
 }
 
 body.theme-hybrid .hybrid-notice-icon {
-  width: 18px;
-  height: 18px;
+  width: 15.3px;
+  height: 15.3px;
   stroke: #26221c;
   stroke-width: 2.3;
   flex-shrink: 0;
@@ -102,8 +102,8 @@ body.theme-hybrid .hybrid-notice-icon {
 }
 
 body.theme-hybrid .hybrid-notice-heart-icon {
-  width: 18px;
-  height: 18px;
+  width: 15.3px;
+  height: 15.3px;
   object-fit: contain;
   flex-shrink: 0;
   vertical-align: middle;
@@ -112,19 +112,19 @@ body.theme-hybrid .hybrid-notice-heart-icon {
 /* 三欄式表格標頭 (Table Header) - 黑底白字大器錨定 */
 body.theme-hybrid .hybrid-table-header {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 88px 180px;
-  column-gap: 16px;
+  grid-template-columns: minmax(0, 1fr) 74.7px 152.9px;
+  column-gap: 13.6px;
   align-items: center;
-  padding: 15px 22px;
+  padding: 12.7px 18.7px;
   background-color: #111111;
   color: #ffffff;
   border: none;
   font-family: var(--hybrid-font-title);
   font-size: 1.05rem;
   font-weight: 800;
-  letter-spacing: 0.8px;
-  border-radius: 6px;
-  margin-top: 8px;
+  letter-spacing: 0.7px;
+  border-radius: 5.1px;
+  margin-top: 6.8px;
 }
 
 body.theme-hybrid .hybrid-th-col-price {
@@ -141,28 +141,28 @@ body.theme-hybrid .hybrid-th-col-pkg {
 body.theme-hybrid .hybrid-coffee-list {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 11.9px;
   flex-grow: 1;
-  margin-top: 8px;
+  margin-top: 6.8px;
 }
 
 /* 單一品項橫列 (3 欄) - 乾淨白卡，無次級內框 */
 body.theme-hybrid .hybrid-item-row {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 88px 180px;
-  column-gap: 16px;
+  grid-template-columns: minmax(0, 1fr) 74.7px 152.9px;
+  column-gap: 13.6px;
   align-items: center;
-  padding: 16px 22px;
+  padding: 13.6px 18.7px;
   background: #ffffff;
   border: 1.5px solid #ded8cb;
-  border-radius: 8px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
+  border-radius: 6.8px;
+  box-shadow: 0 1px 3.4px rgba(0, 0, 0, 0.03);
   transition: all 0.15s ease;
 }
 
 body.theme-hybrid .hybrid-item-row:hover {
   border-color: #a89e91;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  box-shadow: 0 3.4px 10.2px rgba(0,0,0,0.06);
 }
 
 /* 第一欄：品名、標籤、風味 */
@@ -174,8 +174,8 @@ body.theme-hybrid .hybrid-col-info {
 body.theme-hybrid .hybrid-title-line {
   display: flex;
   align-items: baseline;
-  gap: 6px;
-  margin-bottom: 6px;
+  gap: 5.1px;
+  margin-bottom: 5.1px;
 }
 
 body.theme-hybrid .hybrid-item-id {
@@ -192,7 +192,7 @@ body.theme-hybrid .hybrid-item-name {
   font-size: 1.28rem;
   font-weight: 900;
   -webkit-font-smoothing: antialiased;
-  -webkit-text-stroke: 0.25px currentColor;
+  -webkit-text-stroke: 0.2px currentColor;
   color: var(--hybrid-text-main);
   line-height: 1.35;
   letter-spacing: 0.3px;
@@ -202,17 +202,17 @@ body.theme-hybrid .hybrid-item-name {
 body.theme-hybrid .hybrid-tags-group {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 5.1px;
   flex-wrap: wrap;
-  margin-bottom: 6px;
+  margin-bottom: 5.1px;
 }
 
 /* 標籤設計：極簡直火風（高對比度 + 清晰識別） */
 body.theme-hybrid .hybrid-tag {
   font-size: 0.92rem;
   font-weight: 700;
-  padding: 3px 9px;
-  border-radius: 4px;
+  padding: 3px 7.6px;
+  border-radius: 3.4px;
   line-height: 1.3;
   white-space: nowrap;
 }
@@ -240,13 +240,13 @@ body.theme-hybrid .hybrid-tag-latte {
   border: 1px solid #d4cabb;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 5.1px;
   font-weight: 800;
 }
 
 body.theme-hybrid .hybrid-tag-latte-heart {
-  width: 17px;
-  height: 17px;
+  width: 14.4px;
+  height: 14.4px;
   object-fit: contain;
   vertical-align: middle;
 }
@@ -257,8 +257,8 @@ body.theme-hybrid .hybrid-flavor-notes {
   font-weight: 500;
   color: #242424;
   line-height: 1.68;
-  margin-top: 5px;
-  letter-spacing: 0.25px;
+  margin-top: 4.2px;
+  letter-spacing: 0.2px;
   word-break: break-word;
 }
 
@@ -283,7 +283,7 @@ body.theme-hybrid .hybrid-col-package {
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 5.1px;
   text-align: right;
 }
 
@@ -291,7 +291,7 @@ body.theme-hybrid .hybrid-pkg-row {
   display: flex;
   justify-content: flex-end;
   align-items: baseline;
-  gap: 9px;
+  gap: 7.6px;
   white-space: nowrap;
 }
 
@@ -307,7 +307,7 @@ body.theme-hybrid .hybrid-pkg-val {
   font-weight: 900;
   color: #111111;
   font-size: 1.2rem;
-  min-width: 58px;
+  min-width: 49.3px;
   letter-spacing: -0.02em;
   text-align: right;
 }
@@ -315,7 +315,7 @@ body.theme-hybrid .hybrid-pkg-val {
 /* 頁尾結構：優雅留白，品牌精神標語居中 */
 body.theme-hybrid .hybrid-footer {
   margin-top: auto;
-  padding-top: 20px;
+  padding-top: 17px;
   border-top: 1.5px solid #ded8cc;
   display: flex;
   justify-content: center;
@@ -323,28 +323,28 @@ body.theme-hybrid .hybrid-footer {
   font-size: 1.02rem;
   font-weight: 700;
   color: #333333;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.4px;
 }
 
 
 body.theme-hybrid .hybrid-footer-slogan {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 5.1px;
   color: #444444;
 }
 
 body.theme-hybrid .hybrid-footer-latte-tip {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 5.1px;
   color: var(--hybrid-text-main);
   font-weight: 800;
 }
 
 body.theme-hybrid .hybrid-footer-heart {
-  width: 17px;
-  height: 17px;
+  width: 14.4px;
+  height: 14.4px;
   object-fit: contain;
 }
 
@@ -352,15 +352,15 @@ body.theme-hybrid .hybrid-footer-heart {
 body.theme-hybrid.mode-continuous .a4-sheet {
   min-height: auto;
   height: auto;
-  margin-bottom: 24px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  margin-bottom: 20.4px;
+  box-shadow: 0 3.4px 13.6px rgba(0, 0, 0, 0.06);
 }
 
 @media (max-width: 650px) {
   body.theme-hybrid .a4-sheet {
-    padding: 22px 16px;
+    padding: 18.7px 13.6px;
     width: 100%;
-    margin-bottom: 16px;
+    margin-bottom: 13.6px;
   }
 
   body.theme-hybrid .hybrid-table-header {
@@ -371,8 +371,8 @@ body.theme-hybrid.mode-continuous .a4-sheet {
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    gap: 12px;
-    padding: 14px 12px;
+    gap: 10.2px;
+    padding: 11.9px 10.2px;
   }
 
   body.theme-hybrid .hybrid-col-info {
@@ -388,9 +388,9 @@ body.theme-hybrid.mode-continuous .a4-sheet {
     justify-content: space-between;
     align-items: center;
     background: #f7f4ed;
-    padding: 10px 12px;
-    border-radius: 6px;
-    gap: 12px;
+    padding: 8.5px 10.2px;
+    border-radius: 5.1px;
+    gap: 10.2px;
   }
 
   body.theme-hybrid .hybrid-col-price {
@@ -411,7 +411,7 @@ body.theme-hybrid.mode-continuous .a4-sheet {
 
   body.theme-hybrid .hybrid-footer {
     flex-direction: column;
-    gap: 8px;
+    gap: 6.8px;
     text-align: center;
   }
 }
@@ -428,7 +428,7 @@ body.theme-hybrid.mode-continuous .a4-sheet {
     print-color-adjust: exact !important;
     box-shadow: none !important;
     border: none !important;
-    padding: 32px 42px 26px 42px !important;
+    padding: 27.2px 35.7px 22.1px 35.7px !important;
     page-break-after: always !important;
     break-after: page !important;
   }

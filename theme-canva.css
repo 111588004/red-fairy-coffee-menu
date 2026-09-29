@@ -26,8 +26,8 @@ body.theme-canva {
 body.theme-canva .a4-sheet {
   background-color: var(--canva-bg);
   border: 1px solid rgba(0, 0, 0, 0.08);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-  padding: 40px 48px 36px 48px;
+  box-shadow: 0 8.5px 25.5px rgba(0, 0, 0, 0.08);
+  padding: 34px 40.8px 30.6px 40.8px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -41,7 +41,7 @@ body.theme-canva .a4-sheet {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 14px;
+  margin-bottom: 11.9px;
   position: relative;
 }
 
@@ -50,20 +50,20 @@ body.theme-canva .a4-sheet {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: 10.2px;
   margin-bottom: 2px;
 }
 
 .canva-logo-cluster .sub-text {
-  font-size: 13.5px;
+  font-size: 11.5px;
   font-weight: 700;
   letter-spacing: 2px;
   color: #333333;
 }
 
 .canva-logo-cluster .flower-logo-img {
-  width: 44px;
-  height: 44px;
+  width: 37.4px;
+  height: 37.4px;
   object-fit: contain;
 }
 
@@ -72,26 +72,26 @@ body.theme-canva .a4-sheet {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 4px;
-  margin-bottom: 12px;
+  margin-top: 3.4px;
+  margin-bottom: 10.2px;
 }
 
 .canva-brand-title-img {
-  height: 38px;
+  height: 32.3px;
   width: auto;
-  max-width: 175px;
+  max-width: 148.6px;
   object-fit: contain;
   filter: drop-shadow(0 1px 1px rgba(0,0,0,0.04));
 }
 
 .canva-brand-name {
   font-family: var(--canva-font-heading);
-  font-size: 30px;
+  font-size: 25.5px;
   font-weight: 900;
   letter-spacing: 3px;
   color: var(--canva-text-main);
   margin-top: 2px;
-  margin-bottom: 12px;
+  margin-bottom: 10.2px;
   line-height: 1.1;
 }
 
@@ -102,18 +102,18 @@ body.theme-canva .a4-sheet {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  margin-top: 6px;
-  padding-bottom: 8px;
+  margin-top: 5.1px;
+  padding-bottom: 6.8px;
 }
 
 .canva-pill-bar-left {
   display: flex;
   align-items: flex-end;
-  gap: 8px;
+  gap: 6.8px;
 }
 
 .canva-dripper-img {
-  height: 60px;
+  height: 51px;
   width: auto;
   object-fit: contain;
   margin-bottom: -2px;
@@ -124,11 +124,11 @@ body.theme-canva .a4-sheet {
   background-color: var(--canva-pill-bg);
   color: var(--canva-pill-text);
   font-family: var(--canva-font-heading);
-  font-size: 14.5px;
+  font-size: 12.3px;
   font-weight: 800;
   letter-spacing: 1.5px;
-  padding: 6.5px 14px;
-  border-radius: 8px;
+  padding: 5.5px 11.9px;
+  border-radius: 6.8px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -141,17 +141,17 @@ body.theme-canva .a4-sheet {
 .canva-coffee-list {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 13.6px;
   flex-grow: 1;
-  margin-top: 8px;
+  margin-top: 6.8px;
 }
 
 .canva-item-row {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  padding-bottom: 8px;
-  gap: 18px;
+  padding-bottom: 6.8px;
+  gap: 15.3px;
 }
 
 .canva-item-left {
@@ -163,7 +163,7 @@ body.theme-canva .a4-sheet {
 .canva-item-header {
   display: flex;
   align-items: baseline;
-  gap: 12px;
+  gap: 10.2px;
 }
 
 .canva-item-num {
@@ -171,7 +171,7 @@ body.theme-canva .a4-sheet {
   font-size: 1.35rem;
   font-weight: 900;
   color: var(--canva-text-main);
-  min-width: 28px;
+  min-width: 23.8px;
   flex-shrink: 0;
   letter-spacing: -0.02em;
 }
@@ -181,7 +181,7 @@ body.theme-canva .a4-sheet {
   font-size: 1.25rem;
   font-weight: 900;
   -webkit-font-smoothing: antialiased;
-  -webkit-text-stroke: 0.25px currentColor;
+  -webkit-text-stroke: 0.2px currentColor;
   color: var(--canva-text-main);
   line-height: 1.35;
   letter-spacing: 0.3px;
@@ -190,12 +190,12 @@ body.theme-canva .a4-sheet {
 
 /* 品項第二行：處理法與焙度 + 可拿鐵愛心標 */
 .canva-item-process-line {
-  margin-left: 36px;
-  margin-top: 4px;
+  margin-left: 30.6px;
+  margin-top: 3.4px;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 6.8px;
 }
 
 .canva-item-process-text {
@@ -207,17 +207,17 @@ body.theme-canva .a4-sheet {
 }
 
 .canva-heart-icon {
-  width: 20px;
-  height: 20px;
+  width: 17px;
+  height: 17px;
   object-fit: contain;
   vertical-align: middle;
   display: inline-block;
 }
 
-/* 風味敘述行 (從原本過小的 12px 大幅升級至 0.98rem / ~15.7px，行距 1.65) */
+/* 風味敘述行 (從原本過小的 10.2px 大幅升級至 0.98rem / ~13.3px，行距 1.65) */
 .canva-item-flavors {
-  margin-left: 36px;
-  margin-top: 5px;
+  margin-left: 30.6px;
+  margin-top: 4.2px;
   font-size: 0.98rem;
   font-weight: 500;
   color: #222222;
@@ -226,10 +226,10 @@ body.theme-canva .a4-sheet {
   word-break: break-word;
 }
 
-/* 熟豆/濾掛副標行 (從原本過小的 11px 大幅升級至 0.92rem / ~14.7px，高對比 #383838) */
+/* 熟豆/濾掛副標行 (從原本過小的 9.3px 大幅升級至 0.92rem / ~12.5px，高對比 #383838) */
 .canva-item-packaging {
-  margin-left: 36px;
-  margin-top: 4px;
+  margin-left: 30.6px;
+  margin-top: 3.4px;
   font-size: 0.92rem;
   font-weight: 600;
   color: #383838;
@@ -248,7 +248,7 @@ body.theme-canva .a4-sheet {
   font-size: 2.2rem;
   font-weight: 900;
   color: var(--canva-text-main);
-  letter-spacing: 0.5px;
+  letter-spacing: 0.4px;
   line-height: 1;
 }
 
@@ -257,26 +257,26 @@ body.theme-canva .a4-sheet {
    ============================================================================== */
 .canva-footer {
   margin-top: auto;
-  padding-top: 20px;
+  padding-top: 17px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 6.8px;
   font-family: var(--canva-font-heading);
   font-size: 1.02rem;
   font-weight: 800;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.4px;
   color: var(--canva-text-main);
 }
 
 .canva-footer-star {
-  font-size: 16px;
+  font-size: 13.6px;
   line-height: 1;
 }
 
 .canva-footer-heart {
-  width: 20px;
-  height: 20px;
+  width: 17px;
+  height: 17px;
   object-fit: contain;
 }
 
@@ -286,57 +286,57 @@ body.theme-canva .a4-sheet {
 body.theme-canva.mode-continuous .a4-sheet {
   min-height: auto;
   height: auto;
-  margin-bottom: 24px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  margin-bottom: 20.4px;
+  box-shadow: 0 3.4px 13.6px rgba(0, 0, 0, 0.06);
 }
 
-@media (max-width: 600px) {
+@media (max-width: 509.5px) {
   body.theme-canva .a4-sheet {
-    padding: 24px 18px 20px 18px;
+    padding: 20.4px 15.3px 17px 15.3px;
     width: 100%;
-    margin-bottom: 16px;
+    margin-bottom: 13.6px;
   }
 
   .canva-brand-name {
-    font-size: 26px;
+    font-size: 22.1px;
   }
 
   .canva-brand-title-img {
-    height: 30px;
+    height: 25.5px;
   }
 
 
   .canva-dripper-img {
-    height: 48px;
+    height: 40.8px;
   }
 
   .canva-pill-badge {
-    font-size: 13px;
-    padding: 5px 10px;
+    font-size: 11px;
+    padding: 4.2px 8.5px;
   }
 
   .canva-item-name,
   .canva-item-process-text {
-    font-size: 14.5px;
+    font-size: 12.3px;
   }
 
   .canva-item-num {
-    font-size: 14.5px;
-    min-width: 16px;
+    font-size: 12.3px;
+    min-width: 13.6px;
   }
 
   .canva-item-process-line,
   .canva-item-flavors,
   .canva-item-packaging {
-    margin-left: 24px;
+    margin-left: 20.4px;
   }
 
   .canva-item-price {
-    font-size: 18.5px;
+    font-size: 15.7px;
   }
 
   .canva-footer {
-    font-size: 13.5px;
+    font-size: 11.5px;
   }
 }
 
@@ -354,7 +354,7 @@ body.theme-canva.mode-continuous .a4-sheet {
     print-color-adjust: exact !important;
     box-shadow: none !important;
     border: none !important;
-    padding: 38px 46px 32px 46px !important;
+    padding: 32.3px 39.1px 27.2px 39.1px !important;
     page-break-after: always !important;
     break-after: page !important;
   }

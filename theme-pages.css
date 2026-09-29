@@ -12,7 +12,7 @@
   background-color: #F8D8C8;
   color: #4A200F;
   position: relative;
-  padding: 32px 36px 28px 36px;
+  padding: 27.2px 30.6px 23.8px 30.6px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -23,7 +23,7 @@
 .drinks-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-gap: 16px 28px;
+  grid-gap: 13.6px 23.8px;
   height: 100%;
   position: relative;
   z-index: 1;
@@ -45,26 +45,26 @@
 }
 
 .drinks-cloud-title-img {
-  width: 250px;
+  width: 212.3px;
   height: auto;
   object-fit: contain;
-  margin-bottom: -15px;
+  margin-bottom: -12.7px;
   z-index: 3;
-  filter: drop-shadow(0 2px 4px rgba(139, 69, 19, 0.15));
+  filter: drop-shadow(0 2px 3.4px rgba(139, 69, 19, 0.15));
 }
 
 .drinks-suige-sticker-img {
-  width: 215px;
+  width: 182.6px;
   height: auto;
   object-fit: contain;
   z-index: 2;
-  margin-left: 10px;
-  filter: drop-shadow(0 3px 6px rgba(139, 69, 19, 0.12));
+  margin-left: 8.5px;
+  filter: drop-shadow(0 3px 5.1px rgba(139, 69, 19, 0.12));
 }
 
 .drinks-brand-text-block {
-  margin-top: 6px;
-  margin-left: 20px;
+  margin-top: 5.1px;
+  margin-left: 17px;
   line-height: 1.25;
 }
 
@@ -92,10 +92,10 @@
   font-family: 'Zen Maru Gothic', sans-serif;
   font-size: 1rem;
   font-weight: 700;
-  padding: 3px 16px;
-  border-radius: 4px;
-  margin-top: 10px;
-  margin-left: 15px;
+  padding: 3px 13.6px;
+  border-radius: 3.4px;
+  margin-top: 8.5px;
+  margin-left: 12.7px;
   letter-spacing: 1px;
 }
 
@@ -104,16 +104,16 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  margin-top: 10px;
+  margin-top: 8.5px;
   position: relative;
 }
 
 .drink-photo-frame-oreo {
-  width: 235px;
-  height: 220px;
-  border-radius: 4px;
+  width: 199.6px;
+  height: 186.8px;
+  border-radius: 3.4px;
   overflow: hidden;
-  box-shadow: 0 4px 12px rgba(74, 32, 15, 0.18);
+  box-shadow: 0 3.4px 10.2px rgba(74, 32, 15, 0.18);
   background: #fff;
 }
 
@@ -128,8 +128,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 235px;
-  margin-top: 8px;
+  width: 199.6px;
+  margin-top: 6.8px;
 }
 
 .drink-oreo-titles {
@@ -172,9 +172,9 @@
 
 .drink-photo-frame {
   position: relative;
-  border-radius: 4px;
+  border-radius: 3.4px;
   overflow: hidden;
-  box-shadow: 0 4px 12px rgba(74, 32, 15, 0.18);
+  box-shadow: 0 3.4px 10.2px rgba(74, 32, 15, 0.18);
   background: #fff;
 }
 
@@ -193,9 +193,9 @@
   font-family: 'Caveat', 'Zen Maru Gothic', cursive, sans-serif;
   font-weight: 700;
   font-size: 1.35rem;
-  padding: 6px 14px;
+  padding: 5.1px 11.9px;
   border-radius: 50%;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 3px 6.8px rgba(0, 0, 0, 0.15);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -204,35 +204,35 @@
 }
 
 .bubble-americano {
-  top: 40px;
-  left: -20px;
-  min-width: 68px;
-  min-height: 68px;
+  top: 34px;
+  left: -17px;
+  min-width: 57.7px;
+  min-height: 57.7px;
 }
 
 .bubble-matcha {
-  bottom: 12px;
-  right: 12px;
-  min-width: 65px;
-  min-height: 65px;
+  bottom: 10.2px;
+  right: 10.2px;
+  min-width: 55.2px;
+  min-height: 55.2px;
 }
 
 .bubble-oreo {
   position: static;
   background: #FFFFFF;
-  min-width: 65px;
-  min-height: 48px;
-  border-radius: 24px;
-  padding: 4px 12px;
+  min-width: 55.2px;
+  min-height: 40.8px;
+  border-radius: 20.4px;
+  padding: 3.4px 10.2px;
 }
 
 .bubble-latte {
-  bottom: -15px;
-  right: 25px;
-  min-width: 65px;
-  min-height: 48px;
-  border-radius: 24px;
-  padding: 4px 12px;
+  bottom: -12.7px;
+  right: 21.2px;
+  min-width: 55.2px;
+  min-height: 40.8px;
+  border-radius: 20.4px;
+  padding: 3.4px 10.2px;
 }
 
 /* 棕色品項橫幅標籤 (Brown Pill Banner) */
@@ -242,16 +242,16 @@
   font-family: 'Zen Maru Gothic', sans-serif;
   font-size: 1.08rem;
   font-weight: 700;
-  padding: 4px 20px;
-  border-radius: 4px;
+  padding: 3.4px 17px;
+  border-radius: 3.4px;
   letter-spacing: 1.5px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+  box-shadow: 0 2px 4.2px rgba(0,0,0,0.15);
   white-space: nowrap;
   z-index: 4;
 }
 
 .drink-banner-americano {
-  margin-top: -14px;
+  margin-top: -11.9px;
 }
 
 .drink-sub-americano {
@@ -260,20 +260,20 @@
   font-weight: 700;
   color: #4A200F;
   letter-spacing: 1.5px;
-  margin-top: 4px;
+  margin-top: 3.4px;
 }
 
 /* 抹茶相片卡 */
 .drink-photo-frame-matcha {
-  width: 255px;
-  height: 185px;
+  width: 216.5px;
+  height: 157.1px;
 }
 
 .drink-matcha-info {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  margin-top: 6px;
+  margin-top: 5.1px;
   width: 100%;
 }
 
@@ -284,7 +284,7 @@
   color: #4A200F;
   letter-spacing: 1px;
   margin-top: 3px;
-  margin-right: 4px;
+  margin-right: 3.4px;
 }
 
 /* 熱拿鐵卡 */
@@ -293,19 +293,19 @@
   flex-direction: column;
   align-items: flex-end;
   position: relative;
-  margin-top: 10px;
+  margin-top: 8.5px;
 }
 
 .drink-photo-frame-latte {
-  width: 200px;
-  height: 160px;
+  width: 169.8px;
+  height: 135.9px;
 }
 
 .drink-latte-info {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  margin-top: 6px;
+  margin-top: 5.1px;
   width: 100%;
 }
 
@@ -315,15 +315,15 @@
   font-weight: 700;
   color: #4A200F;
   letter-spacing: 1px;
-  margin-top: 4px;
-  margin-right: 4px;
+  margin-top: 3.4px;
+  margin-right: 3.4px;
 }
 
 /* 水妹插畫貼紙 (置於畫面中下方交疊處) */
 .drinks-shuimei-wrapper {
   position: absolute;
   left: 38%;
-  bottom: 12px;
+  bottom: 10.2px;
   z-index: 10;
   display: flex;
   flex-direction: column;
@@ -332,10 +332,10 @@
 }
 
 .drinks-shuimei-sticker-img {
-  width: 145px;
+  width: 123.1px;
   height: auto;
   object-fit: contain;
-  filter: drop-shadow(0 4px 8px rgba(139, 69, 19, 0.15));
+  filter: drop-shadow(0 3.4px 6.8px rgba(139, 69, 19, 0.15));
 }
 
 .drinks-shuimei-label {
@@ -343,8 +343,8 @@
   font-size: 1.15rem;
   font-weight: 700;
   color: #4A200F;
-  margin-top: -15px;
-  margin-left: 55px;
+  margin-top: -12.7px;
+  margin-left: 46.7px;
 }
 
 
@@ -355,7 +355,7 @@
   background-color: #441F10;
   color: #FFFFFF;
   position: relative;
-  padding: 30px 42px 28px 42px;
+  padding: 25.5px 35.7px 23.8px 35.7px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -372,11 +372,11 @@
 }
 
 .bakery-cookie-img {
-  width: 440px;
+  width: 373.6px;
   max-width: 90%;
   height: auto;
   object-fit: contain;
-  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.35));
+  filter: drop-shadow(0 2px 4.2px rgba(0, 0, 0, 0.35));
 }
 
 .bakery-cursive-sub {
@@ -385,8 +385,8 @@
   font-weight: 700;
   color: #E59247;
   letter-spacing: 1px;
-  margin-top: 4px;
-  margin-right: -130px;
+  margin-top: 3.4px;
+  margin-right: -110.4px;
   text-shadow: 0 1px 3px rgba(0,0,0,0.5);
 }
 
@@ -394,29 +394,29 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 16px;
-  margin: 2px 0 12px 0;
+  gap: 13.6px;
+  margin: 2px 0 10.2px 0;
   font-family: 'Zen Maru Gothic', 'Noto Serif TC', sans-serif;
   font-size: 2.2rem;
   font-weight: 700;
-  letter-spacing: 4px;
+  letter-spacing: 3.4px;
 }
 
 .bakery-title-white {
   color: #FDF8F2;
-  text-shadow: 0 2px 6px rgba(0,0,0,0.5);
+  text-shadow: 0 2px 5.1px rgba(0,0,0,0.5);
 }
 
 .bakery-title-orange {
   color: #D48B3D;
-  text-shadow: 0 2px 6px rgba(0,0,0,0.5);
+  text-shadow: 0 2px 5.1px rgba(0,0,0,0.5);
 }
 
 /* 6 款甜點輕食 2 欄式網格 */
 .bakery-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-gap: 16px 26px;
+  grid-gap: 13.6px 22.1px;
   width: 100%;
   flex: 1;
 }
@@ -431,10 +431,10 @@
 .bakery-img-box {
   width: 100%;
   aspect-ratio: 1.05 / 1;
-  border-radius: 6px;
+  border-radius: 5.1px;
   overflow: hidden;
   position: relative;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 3.4px 10.2px rgba(0, 0, 0, 0.45);
   background: #2b1308;
 }
 
@@ -452,11 +452,11 @@
   font-family: 'Zen Maru Gothic', sans-serif;
   font-size: 1.05rem;
   font-weight: 700;
-  padding: 4px 22px;
-  border-radius: 20px;
-  margin-top: -13px;
+  padding: 3.4px 18.7px;
+  border-radius: 17px;
+  margin-top: -11px;
   z-index: 2;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 3px 6.8px rgba(0, 0, 0, 0.4);
   white-space: nowrap;
   letter-spacing: 1px;
 }
@@ -467,15 +467,15 @@
   font-family: 'Zen Maru Gothic', sans-serif;
   font-size: 1.15rem;
   font-weight: 700;
-  margin-top: 6px;
+  margin-top: 5.1px;
   letter-spacing: 1px;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  text-shadow: 0 2px 3.4px rgba(0, 0, 0, 0.5);
 }
 
 /* 純素食友善小標籤 */
 .bakery-vegan-pill {
   position: absolute;
-  top: 8px;
+  top: 6.8px;
   left: 50%;
   transform: translateX(-50%);
   background: rgba(254, 238, 236, 0.95);
@@ -483,10 +483,10 @@
   font-family: 'Zen Maru Gothic', sans-serif;
   font-size: 0.82rem;
   font-weight: 700;
-  padding: 3px 12px;
-  border-radius: 12px;
+  padding: 3px 10.2px;
+  border-radius: 10.2px;
   z-index: 3;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 5.1px rgba(0, 0, 0, 0.3);
   white-space: nowrap;
 }
 
