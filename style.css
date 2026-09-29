@@ -609,30 +609,39 @@ body.mode-continuous .sheet-page-indicator {
   margin-top: 5.1px;
 }
 
-/* 2. Notice Bar (滿版橫幅，內文 56px 對齊風格三，WCAG AAA 高對比度) */
+/* 2. Notice Bar (滿版橫幅，極致緊湊單行，絕不換行，優雅金色裝飾帶) */
 .notice-bar {
   background-color: var(--color-brand-gold-light);
   border-bottom: 1.5px solid #ded6c8;
   border-top: none;
   border-radius: 0;
-  padding: 11.9px 56px;
+  padding: 7px 56px;
   margin-bottom: 0;
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   align-items: center;
   justify-content: center;
-  gap: 10.2px 23.8px;
-  font-size: 1.02rem;
+  gap: 16px;
+  font-size: 0.88rem;
   font-weight: 600;
   color: #262018;
-  line-height: 1.5;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.notice-divider {
+  color: #c2a677;
+  font-size: 0.7rem;
+  opacity: 0.75;
+  user-select: none;
 }
 
 .notice-item {
   display: inline-flex;
   align-items: center;
-  gap: 6.8px;
-  line-height: 1.45;
+  gap: 5.5px;
+  line-height: 1.4;
+  white-space: nowrap;
 }
 
 .notice-badge {
@@ -641,8 +650,8 @@ body.mode-continuous .sheet-page-indicator {
 }
 
 .notice-icon {
-  width: 15.3px;
-  height: 15.3px;
+  width: 14px;
+  height: 14px;
   stroke: var(--color-brand-wine);
   stroke-width: 2.3;
   flex-shrink: 0;
@@ -654,8 +663,8 @@ body.mode-continuous .sheet-page-indicator {
   background-color: #161616;
   color: #ffffff;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 72px 168px;
-  column-gap: 20px;
+  grid-template-columns: minmax(0, 1fr) 68px 148px;
+  column-gap: 28px;
   padding: 12.7px 56px;
   font-size: 1.05rem;
   font-weight: 700;
@@ -686,8 +695,8 @@ body.mode-continuous .sheet-page-indicator {
 
 .coffee-item-row {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 72px 168px;
-  column-gap: 20px;
+  grid-template-columns: minmax(0, 1fr) 68px 148px;
+  column-gap: 28px;
   padding: 14.4px 56px;
   background: transparent;
   border: none;
@@ -845,22 +854,21 @@ body.mode-continuous .sheet-page-indicator {
   display: flex;
   justify-content: flex-end;
   align-items: baseline;
-  gap: 7.6px;
+  gap: 3.5px;
   white-space: nowrap;
 }
 
 .pkg-label {
   color: #383838;
   font-weight: 600;
-  font-size: 1.0rem;
+  font-size: 0.96rem;
 }
 
 .pkg-val {
   font-family: var(--font-sans);
   font-weight: 900;
   color: #111111;
-  min-width: 49.3px;
-  font-size: 1.2rem;
+  font-size: 1.15rem;
   letter-spacing: -0.02em;
   text-align: right;
 }
