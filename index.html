@@ -11,32 +11,20 @@
   <link rel="stylesheet" href="./theme-hybrid.css">
   <link rel="stylesheet" href="./theme-pages.css">
 </head>
-<body class="theme-wine mode-a4">
+<body class="theme-wine-brand mode-a4">
 
   <!-- 頂部互動控制列（螢幕顯示，列印時自動隱藏） -->
   <header class="controls-toolbar" aria-label="版面控制列">
     
-    <!-- 1. 視覺風格切換 (四大手沖風格，依數字 1 至 4 順序排列) -->
-    <div class="toolbar-group" id="group-theme-select">
-      <span class="toolbar-label" id="label-theme">手沖風格：</span>
-      <div class="segmented-control" role="group" aria-labelledby="label-theme">
-        <button type="button" class="seg-btn active" id="btn-theme-wine" aria-pressed="true" onclick="setTheme('wine')">🍷 風格一：經典酒紅雅致</button>
-        <button type="button" class="seg-btn" id="btn-theme-canva" aria-pressed="false" onclick="setTheme('canva')">📜 風格二：Canva 原版二欄</button>
-        <button type="button" class="seg-btn" id="btn-theme-hybrid" aria-pressed="false" onclick="setTheme('hybrid')">✨ 風格三：直火極簡三欄 (品牌旗艦)</button>
-        <button type="button" class="seg-btn" id="btn-theme-wine-brand" aria-pressed="false" onclick="setTheme('wine-brand')">👑 風格四：酒紅經典品牌版</button>
-      </div>
+    <!-- 品牌版本標籤 (現役核定定版) -->
+    <div class="toolbar-group">
+      <span class="badge-fixed-version">
+        <span class="version-dot"></span>
+        現行定版：嚴選 9 款 (含世界冠軍豆)
+      </span>
     </div>
 
-    <!-- 2. 菜單資料來源切換 -->
-    <div class="toolbar-group" id="group-dataset-select">
-      <label for="select-dataset" class="toolbar-label">菜單版本：</label>
-      <select id="select-dataset" class="select-input" onchange="changeDataset(this.value)">
-        <option value="curated" selected>⭐ 最新核定精選 9 款 (含世界冠軍豆)</option>
-        <option value="canva">📄 Canva PDF 原版 12 款 (完整復刻)</option>
-      </select>
-    </div>
-
-    <!-- 3. 檢視模式切換 -->
+    <!-- 檢視模式切換 -->
     <div class="toolbar-group">
       <span class="toolbar-label" id="label-mode">檢視模式：</span>
       <div class="segmented-control" role="group" aria-labelledby="label-mode">
@@ -45,17 +33,41 @@
       </div>
     </div>
 
-    <!-- 4. 每頁品項數控制 -->
+    <!-- 每頁品項數控制 -->
     <div class="toolbar-group" id="group-items-per-page">
-      <label for="select-items-per-page" class="toolbar-label">每頁品項數：</label>
+      <label for="select-items-per-page" class="toolbar-label">每頁：</label>
       <select id="select-items-per-page" class="select-input" onchange="changeItemsPerPage(this.value)">
         <option value="4">4 款 / 頁</option>
         <option value="5" selected>5 款 / 頁 (標準推薦)</option>
-        <option value="6">6 款 / 頁 (Canva 原版規格)</option>
+        <option value="6">6 款 / 頁</option>
       </select>
     </div>
 
-    <!-- 5. 列印按鈕 -->
+    <!-- 📦 歷史封存樣板入口 (Archive) -->
+    <div class="toolbar-group">
+      <label for="select-archive" class="toolbar-label">樣板：</label>
+      <select id="select-archive" class="select-input archive-select" onchange="handleArchiveSelect(this.value)">
+        <option value="wine-brand" selected>👑 現行定版 (酒紅品牌版)</option>
+        <optgroup label="📦 歷史封存樣板 (Archive)">
+          <option value="wine">🍷 風格一：經典酒紅雅致</option>
+          <option value="canva">📜 風格二：Canva 原版二欄 (12款)</option>
+          <option value="hybrid">✨ 風格三：直火極簡三欄 (品牌旗艦)</option>
+        </optgroup>
+      </select>
+    </div>
+
+    <!-- ⚡ 指令修改台按鈕 (其他通路指令入口) -->
+    <div class="toolbar-group">
+      <button type="button" class="btn-command" onclick="toggleCommandConsole()" aria-label="開啟指令修改台">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="4 17 10 11 4 5"></polyline>
+          <line x1="12" y1="19" x2="20" y2="19"></line>
+        </svg>
+        指令修改台
+      </button>
+    </div>
+
+    <!-- 列印按鈕 -->
     <div class="toolbar-group">
       <button type="button" class="btn-print" onclick="window.print()" aria-label="列印或另存為 PDF 文件">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
@@ -63,10 +75,52 @@
           <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
           <rect x="6" y="14" width="12" height="8"></rect>
         </svg>
-        列印 / 另存為 PDF
+        列印 / 另存 PDF
       </button>
     </div>
   </header>
+
+  <!-- ⚡ 指令修改台抽屜面板 (Command Console Modal / Drawer) -->
+  <aside id="command-console-drawer" class="cmd-drawer" aria-hidden="true">
+    <div class="cmd-drawer-backdrop" onclick="toggleCommandConsole(false)"></div>
+    <div class="cmd-drawer-content">
+      <div class="cmd-drawer-header">
+        <div class="cmd-title-wrap">
+          <span class="cmd-icon">⚡</span>
+          <h3>紅仙水 菜單指令調控台</h3>
+        </div>
+        <button type="button" class="cmd-btn-close" onclick="toggleCommandConsole(false)" aria-label="關閉指令台">✕</button>
+      </div>
+
+      <div class="cmd-drawer-body">
+        <p class="cmd-hint">
+          直接輸入指令快速修改菜單（支援修改價格、焙度、可拿鐵開關、備註等），按下執行即刻在上方畫布即時渲染！
+        </p>
+
+        <!-- 指令範本捷徑 -->
+        <div class="cmd-shortcuts">
+          <span class="cmd-sc-label">快速指令範例：</span>
+          <button type="button" class="cmd-chip" onclick="applyExampleCmd('set-price 4 cup 180')">修改冠軍豆單杯 180</button>
+          <button type="button" class="cmd-chip" onclick="applyExampleCmd('set-latte 8 true')">開啟第8款桃可可拿鐵</button>
+          <button type="button" class="cmd-chip" onclick="applyExampleCmd('set-roast 1 中淺焙')">改第1款焙度為中淺焙</button>
+        </div>
+
+        <div class="cmd-input-wrap">
+          <label for="cmd-textarea" class="cmd-label">指令輸入框（每行一條指令，或貼上 JSON / 自然指令）：</label>
+          <textarea id="cmd-textarea" class="cmd-textarea" rows="4" placeholder="例如：&#10;set-price 4 cup 180&#10;set-latte 8 true&#10;set-price 1 beans 480"></textarea>
+        </div>
+
+        <div class="cmd-actions">
+          <button type="button" class="btn-cmd-exec" onclick="executeCommands()">🚀 執行指令並即時預覽</button>
+          <button type="button" class="btn-cmd-reset" onclick="resetDefaultData()">↺ 重設回原始核定版</button>
+          <button type="button" class="btn-cmd-export" onclick="exportDataJs()">📋 匯出最新 data.js</button>
+        </div>
+
+        <!-- 執行狀態回饋 -->
+        <div id="cmd-log" class="cmd-log" style="display:none;"></div>
+      </div>
+    </div>
+  </aside>
 
   <!-- A4 分頁舞台容器（由 data.js 動態渲染生成） -->
   <main class="pages-stage" id="pages-stage" role="main"></main>
@@ -74,41 +128,224 @@
   <!-- 載入菜單資料庫（無 CORS 限制，雙擊直接開啟） -->
   <script src="./data.js"></script>
 
-  <!-- 三風格雙資料集渲染引擎 -->
+  <!-- 三風格雙資料集渲染引擎與指令調控台 -->
   <script>
-    let currentTheme = 'wine'; // 'wine' | 'canva' | 'hybrid' | 'wine-brand'
-    let currentDataset = 'curated'; // 'curated' | 'canva'
+    let currentTheme = 'wine-brand'; // 預設現行定版：'wine-brand'
+    let currentDataset = 'curated'; // 預設核定 9 款：'curated'
     let currentMode = 'a4'; // 'a4' | 'continuous'
     let itemsPerPage = 5;
+
+    // 備份初始數據供重設使用
+    let initialCoffeeMenuData = null;
+    function backupInitialData() {
+      if (!initialCoffeeMenuData && window.COFFEE_MENU_DATA) {
+        initialCoffeeMenuData = JSON.parse(JSON.stringify(window.COFFEE_MENU_DATA));
+      }
+    }
 
     function setTheme(theme) {
       currentTheme = theme;
       document.body.className = `theme-${theme} ${currentMode === 'a4' ? 'mode-a4' : 'mode-continuous'}`;
       
-      const themes = ['wine', 'canva', 'hybrid', 'wine-brand'];
-      themes.forEach(t => {
-        const btn = document.getElementById(`btn-theme-${t}`);
-        const isActive = (t === theme);
-        btn.classList.toggle('active', isActive);
-        btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
-      });
+      const selectArchive = document.getElementById('select-archive');
+      if (selectArchive) {
+        selectArchive.value = theme;
+      }
       
-      // 自動切換合適的預設每頁數量與資料集建議
+      // 自動切換合適的每頁數量
       if (theme === 'canva') {
         itemsPerPage = 6;
-        document.getElementById('select-items-per-page').value = '6';
+        const sel = document.getElementById('select-items-per-page');
+        if (sel) sel.value = '6';
       } else {
         itemsPerPage = 5;
-        document.getElementById('select-items-per-page').value = '5';
+        const sel = document.getElementById('select-items-per-page');
+        if (sel) sel.value = '5';
       }
       
       renderPages();
+    }
+
+    function handleArchiveSelect(theme) {
+      if (theme === 'canva') {
+        currentDataset = 'canva';
+      } else {
+        currentDataset = 'curated';
+      }
+      setTheme(theme);
     }
 
     function changeDataset(val) {
       currentDataset = val;
       renderPages();
     }
+
+    // ==========================================
+    // ⚡ 指令修改台 (Command Console Engine)
+    // ==========================================
+    function toggleCommandConsole(force) {
+      const drawer = document.getElementById('command-console-drawer');
+      if (!drawer) return;
+      const isOpen = (typeof force === 'boolean') ? force : !drawer.classList.contains('open');
+      drawer.classList.toggle('open', isOpen);
+      drawer.setAttribute('aria-hidden', (!isOpen).toString());
+      if (isOpen) {
+        backupInitialData();
+        document.getElementById('cmd-textarea').focus();
+      }
+    }
+
+    function applyExampleCmd(cmd) {
+      const ta = document.getElementById('cmd-textarea');
+      if (!ta) return;
+      ta.value = cmd;
+      executeCommands();
+    }
+
+    function logCmd(msg, isSuccess = true) {
+      const logBox = document.getElementById('cmd-log');
+      if (!logBox) return;
+      logBox.style.display = 'block';
+      logBox.style.color = isSuccess ? '#4ade80' : '#f87171';
+      logBox.textContent = `[${new Date().toLocaleTimeString()}] ${msg}`;
+    }
+
+    function executeCommands() {
+      backupInitialData();
+      const ta = document.getElementById('cmd-textarea');
+      if (!ta || !ta.value.trim()) return;
+
+      const raw = ta.value.trim();
+      let logs = [];
+
+      // 支援 A：若輸入是完整 JSON，直接覆蓋菜單資料
+      if (raw.startsWith('{') && raw.endsWith('}')) {
+        try {
+          const parsed = JSON.parse(raw);
+          if (parsed.items) {
+            window.COFFEE_MENU_DATA = parsed;
+            renderPages();
+            logCmd('✅ 成功導入完整 JSON 菜單數據！');
+            return;
+          }
+        } catch (e) {
+          // 不是單一 json，繼續以文字指令解析
+        }
+      }
+
+      // 支援 B：文字快捷行指令解析
+      const lines = raw.split('\n').map(l => l.trim()).filter(Boolean);
+      const items = window.COFFEE_MENU_DATA.items;
+
+      lines.forEach((line, idx) => {
+        const parts = line.split(/\s+/);
+        const action = parts[0].toLowerCase();
+
+        // 1. set-price <id/名稱> <cup|beans|drip> <金額>
+        // 例如：set-price 4 cup 180 或 set-price 肯亞 cup 180
+        if (action === 'set-price' || action === 'price' || action === '改價格') {
+          const target = parts[1];
+          const type = parts[2] ? parts[2].toLowerCase() : 'cup';
+          const val = parseInt(parts[3], 10);
+
+          const item = items.find(it => it.id === target || it.name.includes(target) || String(it.id) === target);
+          if (item && !isNaN(val)) {
+            if (type === 'cup' || type === '單杯') item.cupPrice = val;
+            else if (type === 'beans' || type === '熟豆') item.beansPrice200g = val;
+            else if (type === 'drip' || type === '濾掛') item.dripPrice10pk = val;
+            logs.push(`✓ [品項 ${item.id}] ${item.name}：${type} 價格已更新為 $${val}`);
+          } else {
+            logs.push(`⚠️ 找不到品項「${target}」或金額無效`);
+          }
+        }
+        // 2. set-latte <id/名稱> <true|false|on|off>
+        // 例如：set-latte 8 true 或 拿鐵 8 off
+        else if (action === 'set-latte' || action === 'latte' || action === '拿鐵') {
+          const target = parts[1];
+          const flag = ['true', 'on', '1', 'yes', '可'].includes(String(parts[2]).toLowerCase());
+          const item = items.find(it => it.id === target || it.name.includes(target));
+          if (item) {
+            item.canLatte = flag;
+            logs.push(`✓ [品項 ${item.id}] ${item.name}：可拿鐵標示改為 ${flag ? '開啟 [可拿鐵]' : '關閉'}`);
+          } else {
+            logs.push(`⚠️ 找不到品項「${target}」`);
+          }
+        }
+        // 3. set-roast <id/名稱> <淺焙|中焙|淺中焙...>
+        else if (action === 'set-roast' || action === 'roast' || action === '焙度') {
+          const target = parts[1];
+          const roast = parts[2];
+          const item = items.find(it => it.id === target || it.name.includes(target));
+          if (item && roast) {
+            item.roast = roast;
+            logs.push(`✓ [品項 ${item.id}] ${item.name}：焙度更新為 ${roast}`);
+          }
+        }
+        // 4. set-process <id/名稱> <水洗|日曬...>
+        else if (action === 'set-process' || action === 'process' || action === '處理法') {
+          const target = parts[1];
+          const proc = parts[2];
+          const item = items.find(it => it.id === target || it.name.includes(target));
+          if (item && proc) {
+            item.process = proc;
+            logs.push(`✓ [品項 ${item.id}] ${item.name}：處理法更新為 ${proc}`);
+          }
+        }
+        // 5. set-notes <id/名稱> <風味描述文字>
+        else if (action === 'set-notes' || action === 'notes' || action === '風味') {
+          const target = parts[1];
+          const notes = parts.slice(2).join(' ');
+          const item = items.find(it => it.id === target || it.name.includes(target));
+          if (item && notes) {
+            item.notes = notes;
+            logs.push(`✓ [品項 ${item.id}] ${item.name}：風味描述已更新`);
+          }
+        }
+      });
+
+      renderPages();
+      logCmd(logs.join('\n') || '未識別出有效指令');
+    }
+
+    function resetDefaultData() {
+      if (initialCoffeeMenuData) {
+        window.COFFEE_MENU_DATA = JSON.parse(JSON.stringify(initialCoffeeMenuData));
+        renderPages();
+        logCmd('↺ 已重設回原始核定 9 款菜單數據');
+      }
+    }
+
+    function exportDataJs() {
+      const dataStr = 'window.COFFEE_MENU_DATA = ' + JSON.stringify(window.COFFEE_MENU_DATA, null, 2) + ';\n';
+      navigator.clipboard.writeText(dataStr).then(() => {
+        logCmd('📋 最新 COFFEE_MENU_DATA 已成功複製到剪貼簿！可直接貼上覆蓋 data.js');
+      }).catch(() => {
+        const blob = new Blob([dataStr], { type: 'application/javascript' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'data.js';
+        a.click();
+        logCmd('📥 已自動下載更新後的 data.js 檔案');
+      });
+    }
+
+    // 支援 URL 參數通路：例如 ?cmd=set-price+4+cup+190
+    window.addEventListener('DOMContentLoaded', () => {
+      backupInitialData();
+      const params = new URLSearchParams(window.location.search);
+      const urlCmd = params.get('cmd');
+      if (urlCmd) {
+        const ta = document.getElementById('cmd-textarea');
+        if (ta) {
+          ta.value = decodeURIComponent(urlCmd);
+          executeCommands();
+        }
+      }
+      const urlTheme = params.get('theme');
+      if (urlTheme) {
+        setTheme(urlTheme);
+      }
+    });
 
     function setViewMode(mode) {
       currentMode = mode;
@@ -700,8 +937,8 @@
         .replace(/'/g, '&#039;');
     }
 
-    // 初始化：預設套用風格一（經典酒紅雅致 - 標準 A4 出血卡片版型）
-    setTheme('wine');
+    // 初始化：預設套用現行定版（風格四：酒紅經典品牌版 - 嚴選 9 款）
+    setTheme('wine-brand');
   </script>
 </body>
 </html>
