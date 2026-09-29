@@ -663,8 +663,8 @@ body.mode-continuous .sheet-page-indicator {
   background-color: #161616;
   color: #ffffff;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 68px 148px;
-  column-gap: 28px;
+  grid-template-columns: minmax(0, 1fr) 64px 146px;
+  column-gap: 38px;
   padding: 12.7px 56px;
   font-size: 1.05rem;
   font-weight: 700;
@@ -695,8 +695,8 @@ body.mode-continuous .sheet-page-indicator {
 
 .coffee-item-row {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 68px 148px;
-  column-gap: 28px;
+  grid-template-columns: minmax(0, 1fr) 64px 146px;
+  column-gap: 38px;
   padding: 14.4px 56px;
   background: transparent;
   border: none;
