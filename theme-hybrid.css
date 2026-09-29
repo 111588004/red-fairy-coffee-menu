@@ -112,8 +112,8 @@ body.theme-hybrid .hybrid-notice-heart-icon {
 /* 三欄式表格標頭 (Table Header) - 黑底白字大器錨定 */
 body.theme-hybrid .hybrid-table-header {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 74.7px 152.9px;
-  column-gap: 13.6px;
+  grid-template-columns: minmax(0, 1fr) 72px 168px;
+  column-gap: 20px;
   align-items: center;
   padding: 12.7px 18.7px;
   background-color: #111111;
@@ -149,8 +149,8 @@ body.theme-hybrid .hybrid-coffee-list {
 /* 單一品項橫列 (3 欄) - 乾淨白卡，無次級內框 */
 body.theme-hybrid .hybrid-item-row {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 74.7px 152.9px;
-  column-gap: 13.6px;
+  grid-template-columns: minmax(0, 1fr) 72px 168px;
+  column-gap: 20px;
   align-items: center;
   padding: 13.6px 18.7px;
   background: #ffffff;
